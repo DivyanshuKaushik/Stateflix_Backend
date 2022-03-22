@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^7.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
@@ -47,8 +48,10 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "admininstall": "cd admin && yarn install",
-    "clientinstall": "cd client && yarn install",
+    "admin-dependencies": "cd admin && yarn install",
+    "client-dependencies": "cd client && yarn install",
+    "postinstall": "concurrently \"yarn admin-dependencies\" \"yarn client-dependencies\"",
+    "build": "npx tsc",
     "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts",
     "test": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\"",
@@ -56,13 +59,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DivyanshuKaushik/stateflix.git"
+    "url": "git+https://github.com/DivyanshuKaushik/Stateflix.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DivyanshuKaushik/stateflix/issues"
+    "url": "https://github.com/DivyanshuKaushik/Stateflix/issues"
   },
-  "homepage": "https://github.com/DivyanshuKaushik/stateflix#readme"
+  "homepage": "https://github.com/DivyanshuKaushik/Stateflix#readme"
 }
