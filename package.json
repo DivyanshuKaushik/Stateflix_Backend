@@ -16,7 +16,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "admininstall": "cd admin && yarn install",
+    "clientinstall": "cd client && yarn install"
   },
   "repository": {
     "type": "git",
