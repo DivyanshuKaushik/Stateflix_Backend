@@ -28,7 +28,7 @@ dotenv.config()
 
 // all routes - start
 app.get('/',async(req: Request,res: Response)=>{
-    res.send({message:"Welcome to StateFlix"})
+    res.status(200).send({message:"Welcome to StateFlix"})
 })
 // all routes - end
 
@@ -49,3 +49,5 @@ app.use(errorHandler)
 const PORT: Number = Number(process.env.PORT) || 4000
 
 const server: Server = app.listen(PORT,()=>console.log(`server up at port ${PORT}`))
+
+export default app
