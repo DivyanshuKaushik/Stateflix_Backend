@@ -12,7 +12,7 @@ import * as ReactDOM from "react-dom";
 import App from "./App";
 
 describe('App', function () {
-   it('should display pass in number', function () {
+   it('should pass always', function () {
       //  let container = document.createElement('div');
       //  document.body.appendChild(container);
       //  act(() => {

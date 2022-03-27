@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
+import db from './db'
 // express app initialization
 const app: Application = express()
 
@@ -23,8 +23,11 @@ const corsOptions = {
 app.use(cors(corsOptions))
 // cors config end 
 
-// dotenv config 
+// dotenv config - loading env secrets
 dotenv.config()
+
+// database connection 
+db()
 
 // all routes - start
 app.get('/',async(req: Request,res: Response)=>{
