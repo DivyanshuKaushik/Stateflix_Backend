@@ -1,15 +1,41 @@
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
+import { useState } from 'react'
+import {AiOutlineArrowRight} from 'react-icons/ai'
+
+
 function Navbar() {
+
+  const cat = ['latest', 'popular', 'trending', 'top rated', 'upcoming'] 
+
+  const [isActive, setIsActive] = useState(false)
   return (
-    <div className="bg-[#5161ce] h-10 justify-end ">
-    <div className=" flex items-center  uppercase  text-[#fff]">
-        <div className=' bg-white w-24 z-0 h-10 rounded-tr-lg absolute'></div>
-        <Link className=' z-10 hover:text-black  p-2 w-24 hover: rounded-t-xl flex justify-center ' to="/test">Home</Link>
-        <Link className=' z-10 hover:text-black  p-2 w-24 hover: rounded-t-xl flex justify-center ' to="/test">Latest</Link>
-        <Link className=' z-10 hover:text-black  p-2 w-24 hover: rounded-t-xl flex justify-center ' to="/test">Sports</Link>
-        <Link className=' z-10 hover:text-black  p-2 w-24 hover: rounded-t-xl flex justify-center ' to="/test">Politics</Link>
-    </div>
-    </div>
+    <>
+
+    <header className='flex justify-between px-24'>
+      <div className=''></div>
+      <div>
+      <Link to="/">
+            <div className="text-7xl translate-x-12">State Flix</div>
+            {/* <img src="" alt="logo" /> */}
+          </Link>
+      </div>
+      <div className='flex items-center' >       
+          <button className='text-white font-b bg-teal-500 px-7 py-2 mt-5 rounded-2xl items-center' >
+            Login
+          </button>
+          
+        </div>
+    </header>
+      
+      <nav className='flex justify-center border-t-[1px] border-b-[1px] border-slate-200 my-5 py-2 '>
+        {cat&&cat.map((item, index) => (
+          <div className="px-10">
+            <NavLink to={`/${item}`} key={index} className='flex-col text-black ' >{item}</NavLink>
+          </div>
+        ))}
+      </nav>
+      
+    </>
  
   )
 }
