@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IUser } from "./users";
+import { Schema, model, Types } from "mongoose";
+
 export interface IArticle extends Document {
     title: string;
     summary: String;
@@ -8,7 +8,7 @@ export interface IArticle extends Document {
     category: String;
     type: String;
     status: String;
-    user: IUser;
+    user: Types.ObjectId;
 }
 
 const articleSchema: Schema = new Schema(
@@ -22,21 +22,21 @@ const articleSchema: Schema = new Schema(
             required: true,
         },
         image: {
-            type: String,
+            type: Object,
             required: true,
         },
         date: {
             type: String,
             required: true,
         },
-        category: {
-            type: String,
-            required: true,
-        },
-        type: {
-            type: String,
-            required: true,
-        },
+        // category: {
+        //     type: String,
+        //     required: true,
+        // },
+        // type: {
+        //     type: String,
+        //     required: true,
+        // },
         status: {
             type: String,
             required: true,
