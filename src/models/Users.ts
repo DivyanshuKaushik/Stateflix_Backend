@@ -1,13 +1,16 @@
 import {Schema,model,Document} from 'mongoose'
-import { Request,Response,NextFunction,ErrorRequestHandler } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
 export interface IUser extends Document{
-    name:String,
-    email:String,
-    phone:String,
-    role:String,
-    password:String,
+    _id: string,
+    name:string,
+    email:string,
+    phone:string,
+    role:string,
+    password:string,
+    comparePassword: (password: string) => Promise<boolean>;
+    generateAuthToken: () => Promise<string>;
 }
 
 const userSchema: Schema = new Schema({
@@ -44,15 +47,20 @@ userSchema.pre('save',async function(next){
 })
 // end hashing password middleware 
 
+// compare password middleware
+userSchema.methods.comparePassword = async function(password:string){
+    return await bcrypt.compare(password,this.password)
+}
+// end  compare password middleware
+
 // generate auth token for user authentication
 userSchema.methods.generateAuthToken = async function(){
     try{
-        let token = jwt.sign({_id:this._id,email:this.email,role:this.role},String(process.env.JWT_SECRET));
+        let token = jwt.sign({_id:this._id,email:this.email,role:this.role},String(process.env.JWT_SECRET),{expiresIn:'5d'});
         return token;
     }
     catch(err){
-        console.log(err)
-        // res.status(400).send(err)
+        console.error(err)
     }
 }
 // end generate auth token for user authentication

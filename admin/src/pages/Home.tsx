@@ -1,4 +1,5 @@
 import NewsCard from "../components/cards/NewsCard"
+import NewsLargeCard from "../components/cards/NewsLargeCard"
 import WeatherCard from "../components/cards/WeatherCard"
 import Modal from "../components/utils/Modal"
 
@@ -13,6 +14,7 @@ const Home = () => {
         <NewsCard />
         <NewsCard />
         <NewsCard />
+        <NewsLargeCard />
         <WeatherCard />
       </div>
     </div>
