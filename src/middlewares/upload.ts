@@ -1,16 +1,16 @@
 import multer from "multer";
+import { dirname } from "path";
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        console.log(file);
+        cb(null, `${dirname(String(require.main?.filename))}/uploads/`);
+    },
 
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         console.log(file);
-//         cb(null, "./uploads/");
-//     },
-
-//     filename: function (req: any, file: any, cb: any) {
-//         cb(null, file.originalname);
-//     },
-// });
-const storage = multer.memoryStorage();
+    filename: function (req: any, file: any, cb: any) {
+        cb(null, file.originalname);
+    },
+});
+// const storage = multer.memoryStorage();
 const fileFilter = (req: any, file: any, cb: any) => {
     if (
         file.mimetype === "image/jpg" ||
@@ -22,7 +22,9 @@ const fileFilter = (req: any, file: any, cb: any) => {
         cb(new Error("Image uploaded is not of type jpg/jpeg or png"), false);
     }
 };
-
-const upload = multer({storage: storage, fileFilter : fileFilter});
+const limits = {
+    fileSize: 1024*1024*5,
+}
+const upload = multer({storage,fileFilter,limits});
 
 export default upload
