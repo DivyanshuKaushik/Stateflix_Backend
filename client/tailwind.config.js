@@ -6,8 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'primary': '#2F9FF8',
+        'primary': '#3884ff',
+        // 'primary': '#e02e00',
+        'primary-dark': '#006bbd',
         'secondary': '#072D4B',
+        // 'secondary': '#353535 ',
         'main':"#f4f9f8"
       },
       fontSize:{
