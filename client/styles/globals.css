@@ -2,20 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Nunito",-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    /* background: #f1f4ff; */
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
+/* global css */
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
 }
+/* font style  */
+html,
+body {
+  font-family: "Nunito",-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+/* global css - end */
+
+/* social icons hex colors  */
+.facebook_color{
+  color: #4267B2
+}
+.instagram_color{
+  color: #bc2a8d;
+}
+.twitter_color{
+  color: #00acee;
+}
+/* social icons hex colors - end  */
+
+/* tailwind layer components for styling  */
+@layer components {
+  .social_icon {
+      @apply text-3xl;
+  }
+  .click_effect{
+    @apply transition-all duration-200 ease-in-out transform active:scale-90;
+  }
+}
+/* tailwind layer components for styling - end */

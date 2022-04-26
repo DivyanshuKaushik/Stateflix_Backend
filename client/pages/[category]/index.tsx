@@ -1,24 +1,23 @@
 import { useRouter } from "next/router";
-import NewsCard from '../../components/cards/NewsCard'
-import NewsLayout from '../../components/layout/NewsLayout'
-import PageLayout from '../../components/layout/PageLayout'
-import CategoryTitle from '../../components/utils/CategoryTitle'
+import { useContext } from "react";
+import { Store } from "../../app/StoreProvider";
+import AllCategories from "../../components/AllCategories";
+import PageLayout from "../../components/layout/PageLayout";
+import CategoryNews from "../../components/news/CategoryNews";
 
 const NewsByCategory = () => {
     const router = useRouter();
-    const { category } = router.query;
-  return (
-      <PageLayout>
-          {/* category name  */}
-          <CategoryTitle title={String(category)} color='blue-400' />
-          {/* render all news by category  */}
-        <NewsLayout>
-            <NewsCard />
-            <NewsCard />
-            <NewsCard />
-        </NewsLayout>
-      </PageLayout>
-  )
-}
+    const { category }  = router.query;
+    const { state, dispatch } = useContext(Store);
+    return (
+        <PageLayout>
+            {/* all categories  */}
+            <AllCategories categories={state.category} currentCategory={String(category)} />
+            {/* show all news by category  */}
+            <CategoryNews />
+            {/* pagination  */}
+        </PageLayout>
+    );
+};
 
-export default NewsByCategory
+export default NewsByCategory;

@@ -1,4 +1,6 @@
 import Head from "next/head";
+import StoreProvider from "../app/StoreProvider";
+import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import "../styles/globals.css";
 
@@ -13,8 +15,20 @@ function MyApp({ Component, pageProps }) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header />
-            <Component {...pageProps} />
+            {/* global state wrapper (Context Api) */}
+            <StoreProvider>
+                <body className="flex flex-col min-h-screen">
+                    {/* header section containing navbar  */}
+                    <Header />
+                    {/* all pages  */}
+                    <div className="flex-grow">
+                    <Component {...pageProps} />
+
+                    </div>
+                    {/* footer section  */}
+                    <Footer />
+                </body>
+            </StoreProvider>
         </>
     );
 }
