@@ -21,7 +21,7 @@ const Header = () => {
     return (
         <>
             {/* time and socials  */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center py-1">
                 <div className="flex space-x-2">
                     <span className="bg-gray-200 px-2 text-sm">
                         {new Date().toLocaleString()}
@@ -44,7 +44,7 @@ const Header = () => {
                 <nav className="flex space-x-2 uppercase text-sm overflow-scroll scrollbar-hide">
                     {state.category?.map((item, i) => (
                         <Link key={i} href={`/${item}`}>
-                            <a className="hover:bg-primary-dark hover:font-semibold p-2">
+                            <a className="hover:bg-primary-dark font-semibold tracking-wider text-small p-2">
                                 {item}
                             </a>
                         </Link>

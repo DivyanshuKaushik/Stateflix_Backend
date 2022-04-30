@@ -23,20 +23,19 @@ const articleSchema: Schema = new Schema(
         },
         image: {
             type: Object,
-            required: true,
         },
         date: {
             type: String,
             required: true,
         },
-        // category: {
-        //     type: String,
-        //     required: true,
-        // },
-        // type: {
-        //     type: String,
-        //     required: true,
-        // },
+        category: {
+            type: String,
+            required: true,
+        },
+        type: {
+            type: String,
+            required: true,
+        },
         status: {
             type: String,
             required: true,
