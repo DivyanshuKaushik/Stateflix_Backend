@@ -36,7 +36,7 @@ export const uploadImage = (image: Buffer, name: string) => {
 /** upload image to AWS S3 - end */
 
 /** delete image from AWS S3 bucket */
-const deleteImage = (name: string) => {
+export const deleteImage = (name: string) => {
     return new Promise(async (resolve, reject) => {
         try {
             const params = {

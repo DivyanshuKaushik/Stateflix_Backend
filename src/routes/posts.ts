@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { checkSchema } from "express-validator";
-import { createPost } from "../controllers/posts";
+import { createPost, updatePost } from "../controllers/posts";
 import upload from "../middlewares/upload";
-import { idValidator, newPostValidator } from "../validators";
+import { idValidator, newPostValidator, updatePostValidator } from "../validators";
 
 const router: Router = Router();
 
@@ -23,8 +23,8 @@ router.put(
     "/updatePost",
     upload.single("image"),
     // validate id to update post
-    checkSchema(idValidator),
-    createPost
+    checkSchema(updatePostValidator),
+    updatePost
 );
 
 /** update post - end */

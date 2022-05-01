@@ -1,6 +1,24 @@
 import { ValidationSchema } from "express-validator";
-/**  new post validator - start */
-export const newPostValidator : ValidationSchema = {
+/** common validator - start */
+// id validator  
+export const idValidator : ValidationSchema = {
+    id: {
+        notEmpty: true,
+        isMongoId: {
+            errorMessage: "Invalid id",
+        },
+        errorMessage: "Id is Required!",
+    },
+};
+// userId validator 
+export const userIdValidator : ValidationSchema = {
+    user:{
+        notEmpty: true,
+        errorMessage: "User is Required!",
+    }
+}
+// post validator 
+export const postValidator : ValidationSchema = {
     title: {
         notEmpty: true,
         isLength:{
@@ -25,20 +43,16 @@ export const newPostValidator : ValidationSchema = {
         notEmpty: true,
         errorMessage: "Type is Required!",
     },
-    user:{
-        notEmpty: true,
-        errorMessage: "User is Required!",
-    }
 };
-/**  new post validator - end */
-/** id validator - start */
-export const idValidator : ValidationSchema = {
-    id: {
-        notEmpty: true,
-        isMongoId: {
-            errorMessage: "Invalid id",
-        },
-        errorMessage: "Id is Required!",
-    },
-};
-/** id validator - end */
+/** common validator - end */
+
+/** new post validator */
+export const newPostValidator : ValidationSchema = {
+    ...postValidator,
+    ...userIdValidator,
+}
+
+export const updatePostValidator : ValidationSchema = {
+    ...idValidator,
+    ...postValidator,
+}
