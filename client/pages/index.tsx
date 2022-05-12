@@ -1,19 +1,31 @@
+import axios from "axios";
 import React from "react";
-import PageLayout from "../components/layout/PageLayout";
+import PublicPage from "../components/layout/PublicPage";
 import AllNews from "../components/news/AllNews";
+import API from "../service/API";
 
-const MainPage = () => {
+const MainPage = ({posts}) => {
     return (
-        <PageLayout>
+
+        <PublicPage>
             {/* breaking news  */}
 
             {/* custom ads slider  */}
 
             {/* show all news  */}
-            <AllNews />
+            <AllNews allPosts={posts}/>
             {/* promotion  */}
-        </PageLayout>
+        </PublicPage>
     );
 };
 
 export default MainPage;
+
+export async function getServerSideProps() {
+    const posts = (await axios.get(process.env.API_URL+'/allPosts')).data.data
+    return {
+        props:{
+            posts
+        }
+    }
+}

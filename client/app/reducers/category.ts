@@ -1,17 +1,9 @@
 export const categoryReducer = (state, action) => {
     switch (action.type) {
-        case "GET_CATEGORY":
-            // console.warn('hello')
-            return [
-                "Sports",
-                "Bussiness",
-                "National",
-                "state",
-                "local",
-                "media",
-                "bollywood",
-                "tech",
-            ];
+        case "SET_CATEGORY":
+            state = action.payload;
+            console.log(action.payload)
+            return state;
         default:
             return state
     }

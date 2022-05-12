@@ -7,15 +7,17 @@ import NewsDetail from "./pages/NewsDetail";
 function App() {
     return (
         <>
-            <Navbar />
-            {/* <Header /> */}
+            {/* <Navbar /> */}
+            <Header />
             <Routes>
                 {/* home page  */}
                 <Route path="/" element={<Home />} />
                 {/* news routes  */}
                 <Route path=":category" element={<NewsByCategory />} />
                 <Route path=":category/:id" element={<NewsDetail />} />
-
+                {/* posts  */}
+                <Route path="/posts"  />
+                <Route path="/posts/create"  />
             </Routes>
         </>
     );

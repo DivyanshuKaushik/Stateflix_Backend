@@ -1,23 +1,35 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { useAppSelector } from "../../app/store";
 import { Store } from "../../app/StoreProvider";
 import AllCategories from "../../components/AllCategories";
-import PageLayout from "../../components/layout/PageLayout";
+import PublicPage from "../../components/layout/PublicPage";
 import CategoryNews from "../../components/news/CategoryNews";
+import API from "../../service/API";
 
-const NewsByCategory = () => {
+const NewsByCategory = ({posts}) => {
     const router = useRouter();
     const { category }  = router.query;
     const { state, dispatch } = useContext(Store);
+    const categories = useAppSelector(state=>state.category.category)
     return (
-        <PageLayout>
+        <PublicPage>
             {/* all categories  */}
-            <AllCategories categories={state.category} currentCategory={String(category)} />
+            <AllCategories categories={categories} currentCategory={String(category)} />
             {/* show all news by category  */}
-            <CategoryNews />
+            <CategoryNews posts={posts} />
             {/* pagination  */}
-        </PageLayout>
+        </PublicPage>
     );
 };
 
 export default NewsByCategory;
+
+export async function getServerSideProps(context){
+    const { category } = context.query;
+    const posts = (await axios.get(`${process.env.API_URL}/posts?category=${category}`)).data.data;
+    return {
+        props:{posts}
+    }
+}
