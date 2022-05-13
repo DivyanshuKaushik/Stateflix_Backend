@@ -132,12 +132,12 @@ export const getPosts = async (req: Request, res: Response) => {
         let posts;
         if(category){
             posts = await Posts.find({status:"published",category})
-                .sort({ date: -1 })
+                .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
                 .limit(limitNum);
         }else{
             posts = await Posts.find({status:"published"})
-            .sort({ date: -1 })
+            .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         }
@@ -162,7 +162,7 @@ export const getPostsByCategory = async (req: Request, res: Response) => {
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         const posts = await Posts.find({ category,status:"published" })
-            .sort({ date: -1 })
+            .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         return res
@@ -204,8 +204,7 @@ export const getUnpublishedPosts = async (req: Request, res: Response) => {
         const { page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
-        const posts = await Posts.find({status:"unpublished"})
-            .sort({ date: -1 })
+        const posts = await Posts.find({status:"unpublished"}).sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         return res
@@ -230,15 +229,15 @@ export const getUserPosts =async (req: Request, res: Response) => {
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         const published = await Posts.find({user,status:"published"})
-            .sort({ date: -1 })
+            .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         const unpublished = await Posts.find({user,status:"unpublished"})
-            .sort({ date: -1 })
+            .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         const rejected = await Posts.find({user,status:"rejected"})
-            .sort({ date: -1 })
+            .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum);
         return res
@@ -260,7 +259,7 @@ export const getIndexPosts = async (req: Request, res: Response) => {
         const category = await Category.find()
         const posts = category.map(async (cat) => {
             const post = await Posts.find({category:cat.name,status:"published"})
-                .sort({ date: -1 })
+                .sort({ 'updatedAt': -1 })
                 .limit(10);
             return {category:cat.name,posts:post};
         }
