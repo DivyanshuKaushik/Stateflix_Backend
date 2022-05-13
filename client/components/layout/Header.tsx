@@ -4,9 +4,9 @@ import Link from "next/link";
 import moment from 'moment'
 import { setCategory } from "../../app/slices/categorySlice";
 import { useAppDispatch } from "../../app/store";
-import { Store } from "../../app/StoreProvider";
 import {SocialsLogos} from "../Socials";
 import Subsribe from "../utils/Subsribe";
+import { API_URL } from "../../config";
 
 const Header = () => {
     // const {state,dispatch} = useContext(Store)
@@ -15,7 +15,7 @@ const Header = () => {
     const [categories,setCategories] = useState([])
     useEffect(()=>{
         async function fetchCategories() {
-            const data = (await axios.get(process.env.API_URL+'/category')).data.data
+            const data = (await axios.get(API_URL+'/category')).data.data
             setCategories(data)
             // dispatch({type:'SET_CATEGORY',payload:category})
             dispatch(setCategory(data))
