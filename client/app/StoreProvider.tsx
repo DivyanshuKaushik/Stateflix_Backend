@@ -1,8 +1,22 @@
 import React, { useReducer } from "react";
 import { categoryReducer } from "./reducers/category";
+import { userReducer } from "./reducers/user";
+
+type User = {
+    _id?:string,
+    name?:string,
+    email?:string,
+    password?:string,
+    phone?:string,
+    role?:string,
+    createdAt?:string,
+    updatedAt?:string,
+    __v?:number
+}
 
 type InitialStateType = {
     category: string[];
+    user: User;
 };
 // initialState 
 const initialState = {
@@ -15,7 +29,8 @@ const initialState = {
         "media",
         "bollywood",
         "tech",
-    ]
+    ],
+    user:{}
 };
 // store context (Global Store)
 export const Store = React.createContext<{
@@ -27,8 +42,9 @@ export const Store = React.createContext<{
 });
 
 // merge all reducers 
-const rootReducer = ({ category }, action) => ({
+const rootReducer =async({category,user}, action) => ({
     category: categoryReducer(category, action),
+    user: userReducer(user, action),
 });
 
 // store provider to provide data to entire app 

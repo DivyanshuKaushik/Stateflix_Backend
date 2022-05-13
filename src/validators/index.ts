@@ -17,32 +17,35 @@ export const userIdValidator : ValidationSchema = {
         errorMessage: "User is Required!",
     }
 }
+export const categoryValidator : ValidationSchema = {
+    category:{
+        notEmpty: true,
+        errorMessage: "Category is Required!",
+    }
+}
 // post validator 
 export const postValidator : ValidationSchema = {
     title: {
         notEmpty: true,
         isLength:{
-            options:{min:5,max:30},
+            options:{min:5},
             errorMessage: "Title must be between 5 and 30 characters"
         },
         errorMessage: "Title is Required!",
     },
+    author:{
+        notEmpty: true,
+        errorMessage: "Author is Required!",
+    },
     summary: {
         notEmpty: true,
         isLength:{
-            options:{min:10,max:80},
+            options:{min:10},
             errorMessage: "Summary must be between 10 and 80 characters"
         },
         errorMessage: "Summary is Required!",
     },
-    category:{
-        notEmpty: true,
-        errorMessage: "Category is Required!",
-    },
-    type:{
-        notEmpty: true,
-        errorMessage: "Type is Required!",
-    },
+   ...categoryValidator,
 };
 /** common validator - end */
 
@@ -55,4 +58,11 @@ export const newPostValidator : ValidationSchema = {
 export const updatePostValidator : ValidationSchema = {
     ...idValidator,
     ...postValidator,
+}
+export const updateStatusValidator : ValidationSchema = {
+    ...idValidator,
+    status:{
+        notEmpty: true,
+        errorMessage: "Status is Required!",
+    },
 }

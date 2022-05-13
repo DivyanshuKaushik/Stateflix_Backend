@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import Users from "../models/Users";
+import {CustomRequest} from "../middlewares/auth";
 
 /** register controller - start */
 export const register = async (req: Request, res: Response) => {
@@ -59,9 +60,22 @@ export const login = async (req: Request, res: Response) => {
             status: 200,
             message: "User logged in successfully",
             token,
+            user:existingUser
         });
     } catch (error) {
         res.status(500).json({ status: 500, error });
     }
 }
 /** login controller - end */
+/** get authenticated user */
+export const getAuthenticatedUser = async (req: CustomRequest, res: Response) => {
+    try{
+        // verified user from token
+        const user = req.user 
+        const userData = await Users.findById(user._id)
+        return res.status(200).json({status: 200, message: "User found", user:userData})
+    }catch (error) {
+        res.status(500).json({ status: 500, error });
+    }
+}
+/** get authenticated user - end */

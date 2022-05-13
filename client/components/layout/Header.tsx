@@ -1,36 +1,44 @@
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
-import { useContext } from "react";
+import moment from 'moment'
+import { setCategory } from "../../app/slices/categorySlice";
+import { useAppDispatch } from "../../app/store";
 import { Store } from "../../app/StoreProvider";
-import Socials from "../Socials";
+import {SocialsLogos} from "../Socials";
 import Subsribe from "../utils/Subsribe";
 
-// const category = [
-//     "Sports",
-//     "Bussiness",
-//     "National",
-//     "state",
-//     "local",
-//     "media",
-//     "bollywood",
-//     "tech",
-// ];
 const Header = () => {
-    const {state,dispatch} = useContext(Store)
-    // dispatch({type:'GET_CATEGORY'})
-    console.log(state.category)
+    // const {state,dispatch} = useContext(Store)
+    const [today,setToday] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'))
+    const dispatch = useAppDispatch()
+    const [categories,setCategories] = useState([])
+    useEffect(()=>{
+        async function fetchCategories() {
+            const data = (await axios.get(process.env.API_URL+'/category')).data.data
+            setCategories(data)
+            // dispatch({type:'SET_CATEGORY',payload:category})
+            dispatch(setCategory(data))
+        }
+        fetchCategories()
+        setInterval(()=>{
+            setToday(moment().format('MMMM Do YYYY, h:mm:ss a'))
+        },60)
+    },[])
+
     return (
         <>
             {/* time and socials  */}
             <div className="flex justify-between items-center py-1">
                 <div className="flex space-x-2">
                     <span className="bg-gray-200 px-2 text-sm">
-                        {new Date().toLocaleString()}
+                        {moment().format('MMMM Do YYYY, h:mm:ss a')}
                     </span>
                     {/* subscribe button  */}
                     <Subsribe />
                 </div>
                 {/* socials  */}
-               <Socials />
+               <SocialsLogos />
             </div>
             {/* main header  */}
             <header className="flex items-center bg-primary text-white space-x-8 sticky top-0 z-50">
@@ -42,10 +50,10 @@ const Header = () => {
                 </Link>
                 {/* category list */}
                 <nav className="flex space-x-2 uppercase text-sm overflow-scroll scrollbar-hide">
-                    {state.category?.map((item, i) => (
-                        <Link key={i} href={`/${item}`}>
+                    {categories?.map(({name}, i) => (
+                        <Link key={i} href={`/${name}`}>
                             <a className="hover:bg-primary-dark font-semibold tracking-wider text-small p-2">
-                                {item}
+                                {name}
                             </a>
                         </Link>
                     ))}

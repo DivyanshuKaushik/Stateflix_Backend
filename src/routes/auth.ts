@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { login, register } from "../controllers/auth";
-import { isAdmin } from "../middlewares/auth";
+import { getAuthenticatedUser, login, register } from "../controllers/auth";
+import { isAdmin, verifyToken } from "../middlewares/auth";
 import upload from "../middlewares/upload";
 const router: Router = Router();
 
@@ -42,12 +42,8 @@ router.post(
     login
 );
 /***** login module - end *****/
-router.post('/upload',upload.single('image'),async(req:any,res:any)=>{
-    try{
-        res.send(req.file.originalname)
-    }catch(error){
-        console.error(error);
-        res.status(500).json({ status: 500, error });
-    }
-})
+
+/** get current authenticated user */
+router.get('/getAuthenticatedUser',verifyToken,getAuthenticatedUser)
+/** get current authenticated user - end */
 export default router;

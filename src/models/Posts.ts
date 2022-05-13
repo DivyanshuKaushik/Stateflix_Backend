@@ -1,23 +1,28 @@
 import { Schema, model, Types } from "mongoose";
 
-export interface IArticle extends Document {
+export interface IPost extends Document {
     title: string;
     summary: String;
     image: String;
+    author: String;
     date: Date;
     category: String;
-    type: String;
+    breaking: String;
     status: String;
     user: Types.ObjectId;
 }
 
-const articleSchema: Schema = new Schema(
+const postSchema: Schema = new Schema(
     {
         title: {
             type: String,
             required: true,
         },
         summary: {
+            type: String,
+            required: true,
+        },
+        author: {
             type: String,
             required: true,
         },
@@ -32,9 +37,9 @@ const articleSchema: Schema = new Schema(
             type: String,
             required: true,
         },
-        type: {
-            type: String,
-            required: true,
+        breaking: {
+            type: Boolean,
+            default:false,
         },
         status: {
             type: String,
@@ -48,6 +53,6 @@ const articleSchema: Schema = new Schema(
     { timestamps: true }
 );
 
-const Article = model<IArticle>("Article", articleSchema);
+const Posts = model<IPost>("Post", postSchema);
 
-export default Article;
+export default Posts;

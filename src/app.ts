@@ -11,6 +11,7 @@ import db from './db'
 /**  import all routes */ 
 import authRoutes from './routes/auth'
 import postRoutes from './routes/posts'
+import categoryRoutes from './routes/category'
 
 /**  express app initialization */
 const app: Application = express()
@@ -26,7 +27,7 @@ app.use(bodyParser.json())
 
 /**  cors configuration  */
 const corsOptions = {
-    origin:['https://stateflix.in','https://stateflix.com'],
+    origin:['https://stateflix.in','https://stateflix.com',"http://localhost:3000"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200
 }
@@ -46,6 +47,7 @@ app.get('/',async(req: Request,res: Response)=>{
 
 app.use('/api/v1',authRoutes)
 app.use('/api/v1',postRoutes)
+app.use('/api/v1',categoryRoutes)
 /**** all routes - end *****/
 
 /**  error handling - start */
