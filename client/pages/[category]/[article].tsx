@@ -68,7 +68,7 @@ export async function getServerSideProps(context) {
         const { category,article } = context.query;
         const id = article.split('-').reverse()[0]
         const post = (await axios.get(API_URL+'/posts/'+id)).data.data
-        const related = (await axios.get(`${API_URL}/posts?category=${category}`)).data.data;
+        const related = (await axios.get(`${API_URL}/posts?category=${category}&page=1&limit=100`)).data.data;
         return {
             props: {
                 post,

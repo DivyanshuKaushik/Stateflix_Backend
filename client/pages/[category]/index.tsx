@@ -26,7 +26,7 @@ export default NewsByCategory;
 
 export async function getServerSideProps(context){
     const { category } = context.query;
-    const posts = (await axios.get(`${API_URL}/posts?category=${category}`)).data.data;
+    const posts = (await axios.get(`${API_URL}/posts?category=${category}&page=1&limit=100`)).data.data;
     return {
         props:{posts}
     }
