@@ -5,9 +5,10 @@ import NewsWrapper from "../../components/news/NewsWrapper";
 import Image from "next/image";
 import Socials from "../../components/Socials";
 import axios from "axios";
+import { API_URL } from "../../config";
 
-const NewsDetailPage = ({post }) => {
-    const {title,summary,image} = post
+const NewsDetailPage = ({post,related,category }) => {
+    const {title,summary,image,date} = post
     return (
         <PublicPage>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-2 xl:gap-4 py-6">
@@ -28,11 +29,11 @@ const NewsDetailPage = ({post }) => {
                     {/* news content  */}
                     <div className="flex flex-col space-y-2">
                         {/* summary  */}
-                        <p className="text-xl text-secondary">
+                        <p className="text-xl text-secondary opacity-80">
                            {summary}
                         </p>
                         {/* post date  */}
-                        <span className="text-sm text-gray-500 font-thin font-serif italic self-end">Posted On April 25th, 2022</span>
+                        <span className="text-sm text-gray-500 font-thin font-serif italic self-end">Posted On {date}</span>
                         {/* extra content */}
                         <div className="flex justify-between">
                             {/* source link  */}
@@ -43,16 +44,14 @@ const NewsDetailPage = ({post }) => {
                     </div>
                 </main>
                 {/* same category news section */}
-                {/* <aside className="md:col-span-1">
+                <aside className="md:col-span-1">
                     <NewsWrapper>
-                        <CategoryTitle category="bussiness" />
-                        <NewsCard />
-                        <NewsCard />
-                        <NewsCard />
-                        <NewsCard />
-                        <NewsCard />
+                        <CategoryTitle category={category} />
+                        {related?.map(item=>
+                            <NewsCard key={item._id} post={item} />
+                        )}
                     </NewsWrapper>
-                </aside> */}
+                </aside>
             </div>
 
             {/* related news  */}
@@ -66,12 +65,15 @@ export default NewsDetailPage;
 export async function getServerSideProps(context) {
     // get category and article from the url query params
     // try{
-        const { article } = context.query;
+        const { category,article } = context.query;
         const id = article.split('-').reverse()[0]
-        const post = (await axios.get(process.env.API_URL+'/posts/'+id)).data.data
+        const post = (await axios.get(API_URL+'/posts/'+id)).data.data
+        const related = (await axios.get(`${API_URL}/posts?category=${category}`)).data.data;
         return {
             props: {
-                post
+                post,
+                related,
+                category
             },
         };
     // }catch(error){

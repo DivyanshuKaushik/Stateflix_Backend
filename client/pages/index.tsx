@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import PublicPage from "../components/layout/PublicPage";
 import AllNews from "../components/news/AllNews";
-import API from "../service/API";
+import { API_URL } from "../config";
 
 const MainPage = ({posts}) => {
     return (
@@ -22,7 +22,7 @@ const MainPage = ({posts}) => {
 export default MainPage;
 
 export async function getServerSideProps() {
-    const posts = (await axios.get(process.env.API_URL+'/allPosts')).data.data
+    const posts = (await axios.get(API_URL+'/allPosts')).data.data
     return {
         props:{
             posts
