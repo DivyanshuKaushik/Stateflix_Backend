@@ -9,6 +9,9 @@ import Router from "next/router";
 
 import ProgressBar from "@badrap/bar-of-progress";
 import store from "../app/store";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "../config";
 
 const progress = new ProgressBar({
     size: 4,
@@ -22,6 +25,7 @@ const progress = new ProgressBar({
   Router.events.on("routeChangeError", progress.finish);
 
 function MyApp({ Component, pageProps }) {
+
     return (
         <>
             <Head>

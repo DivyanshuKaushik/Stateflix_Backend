@@ -9,6 +9,7 @@ import Subsribe from "../utils/Subsribe";
 import { API_URL } from "../../config";
 
 const Header = () => {
+    console.log(API_URL,"hello")
     // const {state,dispatch} = useContext(Store)
     const [today,setToday] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'))
     const dispatch = useAppDispatch()
@@ -16,6 +17,7 @@ const Header = () => {
     useEffect(()=>{
         async function fetchCategories() {
             const data = (await axios.get(API_URL+'/category')).data.data
+            console.log(data)
             setCategories(data)
             // dispatch({type:'SET_CATEGORY',payload:category})
             dispatch(setCategory(data))

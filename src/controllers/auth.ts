@@ -39,6 +39,7 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
+        console.log(email,password)
 
         // check if user exists in database
         const existingUser = await Users.findOne({ email });

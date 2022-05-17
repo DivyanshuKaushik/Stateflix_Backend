@@ -9,7 +9,7 @@ const NewsCardM = ({post}) => {
         {/* news image  */}
         <div className="relative h-44 sm:h-64 lg:h-44 w-full">
             <Image
-                src={image}
+                src={image || ""}
                 layout="fill"
                 className="h-full w-full object-fill"
             />

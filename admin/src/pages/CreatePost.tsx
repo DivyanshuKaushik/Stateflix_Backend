@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import moment from 'moment'
 import Dropdown from "../components/utils/Dropdown";
 import API from "../API";
+import { Private } from "../layout/Authenticate";
 
 const CreatePost = () => {
 
@@ -98,102 +99,104 @@ const CreatePost = () => {
         }
     };
     return (
+            <Private>
 
-            <main className="w-full">
-                <h3 className="text-center text-2xl text-secondary font-semibold opacity-95 my-2">
-                    Create New Post
-                </h3>
+                <main className="w-full">
+                    <h3 className="text-center text-2xl text-secondary font-semibold opacity-95 my-2">
+                        Create New Post
+                    </h3>
 
-                {/* create new post  */}
-                <div className="w-4/5 md:w-2/3 lg:w-1/2 mx-auto border p-4 shadow-md rounded-md">
-                    <form className="flex flex-col" onSubmit={createPost}>
-                        {/* title  */}
-                        <div className="grid grid-cols-5 my-2">
-                            <label htmlFor="title">Title</label>
-                            <input
-                                type="text"
-                                placeholder="title"
-                                name="title"
-                                value={data.title}
-                                onChange={handleChange}
-                                className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
-                            />
-                        </div>
-                        {/* summary  */}
-                        <div className="grid grid-cols-5 my-2">
-                            <label htmlFor="summary">Summary</label>
-                            <textarea
-                                placeholder="article summary..."
-                                cols={30}
-                                rows={4}
-                                name="summary"
-                                value={data.summary}
-                                onChange={handleChange}
-                                className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
-                            />
-                        </div>
-                        {/* image  */}
-                        {data.image && imageDataURL ? (
-                            <>
-                                {/* display image if selected  */}
-                                <div className="grid grid-cols-5">
-                                    <span className="col-span-1">Image</span>
-                                    <div className="relative h-64 col-span-4">
-                                        <img
-                                            src={imageDataURL}
-                                            className="h-full w-full object-contain"
+                    {/* create new post  */}
+                    <div className="w-4/5 md:w-2/3 lg:w-1/2 mx-auto border p-4 shadow-md rounded-md">
+                        <form className="flex flex-col" onSubmit={createPost}>
+                            {/* title  */}
+                            <div className="grid grid-cols-5 my-2">
+                                <label htmlFor="title">Title</label>
+                                <input
+                                    type="text"
+                                    placeholder="title"
+                                    name="title"
+                                    value={data.title}
+                                    onChange={handleChange}
+                                    className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
+                                />
+                            </div>
+                            {/* summary  */}
+                            <div className="grid grid-cols-5 my-2">
+                                <label htmlFor="summary">Summary</label>
+                                <textarea
+                                    placeholder="article summary..."
+                                    cols={30}
+                                    rows={4}
+                                    name="summary"
+                                    value={data.summary}
+                                    onChange={handleChange}
+                                    className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
+                                />
+                            </div>
+                            {/* image  */}
+                            {data.image && imageDataURL ? (
+                                <>
+                                    {/* display image if selected  */}
+                                    <div className="grid grid-cols-5">
+                                        <span className="col-span-1">Image</span>
+                                        <div className="relative h-64 col-span-4">
+                                            <img
+                                                src={imageDataURL}
+                                                className="h-full w-full object-contain"
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    {/* select image  */}
+                                    <div className="grid grid-cols-5 my-2">
+                                        <label htmlFor="image">Image</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImage}
+                                            className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
                                         />
                                     </div>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                {/* select image  */}
+                                </>
+                            )}
+                            {/* category  */}
+                            {categories && 
                                 <div className="grid grid-cols-5 my-2">
-                                    <label htmlFor="image">Image</label>
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImage}
-                                        className="col-span-4 bg-gray-100 px-2 py-1 rounded-md"
+                                    <label htmlFor="category">Category</label>
+                                    <Dropdown
+                                        name="category"
+                                        className="focus:outline-none"
+                                        items={categories}
+                                        onChange={handleChange}
                                     />
                                 </div>
-                            </>
-                        )}
-                        {/* category  */}
-                        {categories && 
+                            }
+                            {/* type  */}
                             <div className="grid grid-cols-5 my-2">
-                                <label htmlFor="category">Category</label>
+                                <label htmlFor="type">Type</label>
                                 <Dropdown
-                                    name="category"
+                                    name="type"
                                     className="focus:outline-none"
                                     items={categories}
                                     onChange={handleChange}
                                 />
                             </div>
-                        }
-                        {/* type  */}
-                        <div className="grid grid-cols-5 my-2">
-                            <label htmlFor="type">Type</label>
-                            <Dropdown
-                                name="type"
-                                className="focus:outline-none"
-                                items={categories}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {/* submit form  */}
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="px-4 py-1 bg-green-400 text-white rounded-sm"
-                            >
-                                Post
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </main>
+                            {/* submit form  */}
+                            <div className="flex justify-end">
+                                <button
+                                    type="submit"
+                                    className="px-4 py-1 bg-green-400 text-white rounded-sm"
+                                >
+                                    Post
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </main>
+            </Private>
     );
 };
 

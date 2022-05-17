@@ -20,27 +20,27 @@ interface Props {
     btnName: String;
 }
 
-export default function ModalWithBtn({ children, btnName }: Props) {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export default function ModalWithBtn({ children, show, setShow }: any) {
+    const handleOpen = () => setShow(true);
+    const handleClose = () => setShow(false);
 
     return (
         <>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
-            <button className="" onClick={handleOpen}>
+            {/* <button className="" onClick={handleOpen}>
                 {btnName}
-            </button>
+            </button> */}
             <Modal
                 // keepMounted
-                open={open}
+                open={show}
                 onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
             >
                 <div className="flex justify-center items-center h-screen w-4/5 mx-auto">
-                  <button className="bg-gray-400" onClick={handleClose}>close</button>
-                  {children}</div>
+                    <button className="bg-gray-400" onClick={handleClose}>
+                        hrllo
+                    </button>
+                    {children}
+                </div>
             </Modal>
         </>
     );

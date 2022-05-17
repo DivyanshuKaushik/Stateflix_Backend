@@ -5,7 +5,7 @@ import AllCategories from "../../components/AllCategories";
 import PublicPage from "../../components/layout/PublicPage";
 import CategoryNews from "../../components/news/CategoryNews";
 import { API_URL } from "../../config";
-import API from "../../service/API";
+// import API from "../../service/API";
 
 const NewsByCategory = ({posts}) => {
     const router = useRouter();
