@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createCategory, deleteCategory, getCategories } from "../controllers/category";
+import { isEditor } from "../middlewares/auth";
 const router: Router = Router();
 
 // get all category 
@@ -7,9 +8,9 @@ const router: Router = Router();
 router.get('/category',getCategories)
 // create new category 
 // POST /api/v1/category @access Private Editor/Admin
-router.post('/category',createCategory)
+router.post('/category',isEditor,createCategory)
 // deletecategory 
 // DELETE /api/v1/category @access Private Editor/Admin
-router.delete('/category/:id',deleteCategory)
+router.delete('/category/:id',isEditor,deleteCategory)
 
 export default router;

@@ -3,7 +3,7 @@ import Modal from "./utils/Modal";
 import ModalWithBtn from "./utils/ModalWithBtn";
 import { useContext, useEffect, useState } from "react";
 import swal from "sweetalert";
-import moment from 'moment'
+import moment from "moment";
 import Dropdown from "./utils/Dropdown";
 import API from "../API";
 import { ChangeContext } from "../context/ChangeContext";
@@ -11,47 +11,47 @@ interface Props {
     post: any;
 }
 const EditPost = ({ post }: Props) => {
-    const { title, summary, image,author,date } = post;
+    // const { title, summary, image, author, date,category } = post;
     const [showModal, setShowModal] = useState(false);
 
-    const {updated,setUpdated} = useContext(ChangeContext)
-    // current authenticated user 
-    const user = JSON.parse(String(localStorage.getItem("user")))
+    const { updated, setUpdated } = useContext(ChangeContext);
+    // current authenticated user
+    const user = JSON.parse(String(localStorage.getItem("user")));
 
     const [categories, setCategories] = useState([]);
 
-    // fetch all categories 
-    useEffect(()=>{
+    // fetch all categories
+    useEffect(() => {
         async function fetchCategories() {
             try {
                 const categories = (await API.get("/category")).data.data;
-                const categoriesArr = categories.map(({name}:any)=>name)
-                setCategories(categoriesArr)
+                const categoriesArr = categories.map(({ name }: any) => name);
+                setCategories(categoriesArr);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchCategories();
-    },[])
+    }, []);
     // post state hook
     const [data, setData] = useState({
         ...post,
-        date:moment().format('LLL')
+        date: moment().format("LLL"),
     });
     // temp variable to store image path and display
     const [imageDataURL, setImageDataURL] = useState(post.image);
 
     // function to handle change in input fields and save the data
-    const handleChange = (e:any) => {
+    const handleChange = (e: any) => {
         setData({
             ...data,
             [e.target.name]: e.target.value,
         });
     };
     // handle image file
-    const handleImage = (e:any) => {
+    const handleImage = (e: any) => {
         const reader = new FileReader();
-        reader.onload = (e:any) => {
+        reader.onload = (e: any) => {
             // console.log(e.target.result);
             setImageDataURL(e.target.result);
         };
@@ -63,7 +63,7 @@ const EditPost = ({ post }: Props) => {
     };
 
     // create post on form submit
-    const updatePost = async (e:any) => {
+    const updatePost = async (e: any) => {
         // prevent page refresh
         e.preventDefault();
         // formData to create post
@@ -73,19 +73,21 @@ const EditPost = ({ post }: Props) => {
         postData.append("summary", data.summary);
         postData.append("image", data.image);
         postData.append("category", data.category);
-        postData.append('type',data.type)
-        postData.append('author',user.name)
-        postData.append('id',post._id)
-        postData.append('date',(moment().format('LLL')).toString())
+        postData.append("type", "none");
+        postData.append("author", user.name);
+        postData.append("id", post._id);
+        postData.append("date", moment().format("LLL").toString());
         console.log(data);
         try {
-            const res = (await API.put("/updatePost", postData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })).data;
-            console.log(res)
-            setUpdated(!updated)
+            const res = (
+                await API.put("/updatePost", postData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+            ).data;
+            console.log(res);
+            setUpdated(!updated);
             setShowModal(false);
             swal({
                 title: "Posted!",
@@ -93,7 +95,7 @@ const EditPost = ({ post }: Props) => {
                 icon: "success",
                 // button: "Aww yiss!",
             });
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error.response.data);
             swal({
                 title: "Error!",
@@ -108,8 +110,7 @@ const EditPost = ({ post }: Props) => {
             <button className="" onClick={() => setShowModal(true)}>
                 <FiEdit className="text-orange-600 text-lg" />
             </button>
-            {/* //   <ModalWithBtn btnName="Edit"> */}
-            <Modal title="Edit Post" show={showModal} setShow={setShowModal} save={false} >
+            <ModalWithBtn show={showModal} setShow={setShowModal}>
                 {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-3 px-2 bg-white p-6 relative">
                     <div className="md:col-span-2 space-y-3">
                         <h1 className="text-2xl text-secondary font-bold">
@@ -127,7 +128,7 @@ const EditPost = ({ post }: Props) => {
                         className="col-span-1 h-full w-full object-contain"
                     />
                 </div> */}
-                 <div className="mx-auto border p-2 shadow-md rounded-md">
+                <div className="mx-auto border p-2 shadow-md rounded-md">
                     <form className="flex flex-col" onSubmit={updatePost}>
                         {/* title  */}
                         <div className="grid grid-cols-5 my-2">
@@ -183,7 +184,7 @@ const EditPost = ({ post }: Props) => {
                             </>
                         )}
                         {/* category  */}
-                        {categories && 
+                        {categories && (
                             <div className="grid grid-cols-5 my-2">
                                 <label htmlFor="category">Category</label>
                                 <Dropdown
@@ -193,29 +194,30 @@ const EditPost = ({ post }: Props) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                        }
+                        )}
                         {/* type  */}
-                        <div className="grid grid-cols-5 my-2">
+                        {/* <div className="grid grid-cols-5 my-2">
                             <label htmlFor="type">Type</label>
                             <Dropdown
                                 name="type"
                                 className="focus:outline-none"
                                 items={categories}
                                 onChange={handleChange}
+                                value={data.category}
                             />
-                        </div>
+                        </div> */}
                         {/* submit form  */}
                         <div className="flex justify-end">
                             <button
                                 type="submit"
                                 className="px-4 py-1 bg-green-400 text-white rounded-sm"
                             >
-                                Post
+                                Save
                             </button>
                         </div>
                     </form>
                 </div>
-            </Modal>
+            </ModalWithBtn>
 
             {/* //   </ModalWithBtn> */}
         </>

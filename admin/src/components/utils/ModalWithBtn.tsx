@@ -26,20 +26,22 @@ export default function ModalWithBtn({ children, show, setShow }: any) {
 
     return (
         <>
-            {/* <Button onClick={handleOpen}>Open modal</Button> */}
-            {/* <button className="" onClick={handleOpen}>
-                {btnName}
-            </button> */}
             <Modal
-                // keepMounted
                 open={show}
                 onClose={handleClose}
             >
                 <div className="flex justify-center items-center h-screen w-4/5 mx-auto">
-                    <button className="bg-gray-400" onClick={handleClose}>
-                        hrllo
-                    </button>
-                    {children}
+                    <div className="bg-white p-6 relative">
+                        {children}
+                        <div className="flex justify-end pt-6">
+                            <button
+                                className="bg-red-500 py-1 text-white px-2 font-semibold"
+                                onClick={handleClose}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </Modal>
         </>

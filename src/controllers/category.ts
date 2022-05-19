@@ -4,6 +4,7 @@ import Category from "../models/Category";
 export const createCategory = async(req:Request,res:Response)=>{
     try{
         const {name,hindiName} = req.body;
+        console.log(name,hindiName);
         if(!name || !hindiName){
             return res.status(400).json({errors:[{msg:"Please enter all fields"}]});
         }

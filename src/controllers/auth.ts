@@ -80,3 +80,18 @@ export const getAuthenticatedUser = async (req: CustomRequest, res: Response) =>
     }
 }
 /** get authenticated user - end */
+/** get all users */
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        // find all users in db
+        const users = await Users.find();
+        // check if password is correct
+        res.status(200).json({
+            status: 200,
+            message: "User fetched successfully",
+            data:users
+        });
+    } catch (error) {
+        res.status(500).json({ status: 500, error });
+    }
+}

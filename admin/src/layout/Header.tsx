@@ -24,7 +24,7 @@ const PrivateHeader = () => {
 
             {/* navlinks  */}
             <Private>
-                <nav className="flex justify-center space-x-4 w-full">
+                <nav className="flex justify-center space-x-4 w-full overflow-x-scroll scrollbar-hide">
                     <NavLink
                         to="/dashboard"
                         className="flex items-center text-white"
@@ -53,6 +53,13 @@ const PrivateHeader = () => {
                         >
                             <MdOutlineCreateNewFolder />
                             <span>All Posts</span>
+                        </NavLink>
+                        <NavLink
+                            to="/category"
+                            className="flex items-center text-white"
+                        >
+                            <MdOutlineCreateNewFolder />
+                            <span>Category</span>
                         </NavLink>
                     </Editor>
                     <Admin>

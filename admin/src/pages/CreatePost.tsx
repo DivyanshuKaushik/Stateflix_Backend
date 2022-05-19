@@ -31,7 +31,7 @@ const CreatePost = () => {
         title: "",
         summary: "",
         category: "",
-        type: "",
+        type: "none",
         image: "",
         date:moment().format('LLL')
     });
@@ -175,7 +175,7 @@ const CreatePost = () => {
                                 </div>
                             }
                             {/* type  */}
-                            <div className="grid grid-cols-5 my-2">
+                            {/* <div className="grid grid-cols-5 my-2">
                                 <label htmlFor="type">Type</label>
                                 <Dropdown
                                     name="type"
@@ -183,7 +183,7 @@ const CreatePost = () => {
                                     items={categories}
                                     onChange={handleChange}
                                 />
-                            </div>
+                            </div> */}
                             {/* submit form  */}
                             <div className="flex justify-end">
                                 <button

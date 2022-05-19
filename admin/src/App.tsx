@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import Users from "./pages/Users";
 import {AuthContext} from './context/AuthContext'
+import Category from "./pages/Category";
 function App() {
     const navigate = useNavigate()
     // const user = JSON.parse(String(localStorage.getItem("user")))
@@ -53,6 +54,7 @@ function App() {
                 {(user?.role === "admin" || user?.role === "editor") && (
                     <>
                         <Route path="/posts/all" element={<AllPosts />} />
+                        <Route path="/category" element={<Category />} />
                     </>
                 )}
 
