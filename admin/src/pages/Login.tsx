@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineLockClosed, HiOutlineMail } from "react-icons/hi";
 import Input from "../components/utils/Input";
 import API from "../API";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
     const navigate = useNavigate()
+
+    const {setUser} = useContext(AuthContext)
 
     const [credentials, setCrerdentials] = useState({email:"", password:""});
 
@@ -18,13 +22,15 @@ const Login = () => {
         e.preventDefault();
         try{
             console.log(credentials)
-            const data = (await API.post("/auth/login", credentials)).data;
+            const data = (await axios.post("http://localhost:4000/api/v1/auth/login", credentials)).data;
             // save jwt accessToken to cookie 
-            localStorage.setItem("user", JSON.stringify(data.user));
+            setUser({...data.user, accessToken: data.token});
+            localStorage.setItem("user", JSON.stringify({...data.user,accessToken:data.token}));
             localStorage.setItem("accessToken", JSON.stringify(data.token));
             // swal("Success", "Login Successful", "success");
             // redirect to dashboard after successful login 
-           navigate("/dashboard");
+            window.location.replace('/posts')
+        //    navigate("/posts");
             console.log(data);
         }catch(err){
             console.error(err);

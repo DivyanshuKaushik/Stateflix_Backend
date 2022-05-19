@@ -107,7 +107,8 @@ export const deletePost = async (req: Request, res: Response) => {
 /** post status controller - start  */
 export const updatePostStatus = async (req: Request, res: Response) => {
     try {
-        const { id, status } = req.body;
+        const {id,status} = req.params
+        console.log(status,id)
         const updated = await Posts.findByIdAndUpdate(id, { status });
         return res
             .status(200)

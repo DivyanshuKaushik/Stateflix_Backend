@@ -4,12 +4,13 @@ interface Props {
     items: string[];
     className: string;
     onChange: any;
+    value?:string
 }
 
-const Dropdown = ({ name, items, className, onChange }: Props) => {
+const Dropdown = ({ name, items, className, onChange ,value}: Props) => {
     return (
         <select name={name} className={className} onChange={onChange}>
-            <option value="">select</option>
+            <option value={value ? value : ""}>select</option>
             {items?.map((item: string,i:number) => 
                 <option
                     key={i}

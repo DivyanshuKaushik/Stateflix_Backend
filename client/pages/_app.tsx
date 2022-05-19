@@ -1,18 +1,17 @@
 import Head from "next/head";
-import StoreProvider from "../app/StoreProvider";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import "../styles/globals.css";
 
 import {Provider} from 'react-redux';
-import withRedux from "next-redux-wrapper";
 
 import Router from "next/router";
 
 import ProgressBar from "@badrap/bar-of-progress";
-import PrivateHeader from "../components/layout/PrivateHeader";
 import store from "../app/store";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 const progress = new ProgressBar({
     size: 4,
@@ -26,6 +25,7 @@ const progress = new ProgressBar({
   Router.events.on("routeChangeError", progress.finish);
 
 function MyApp({ Component, pageProps }) {
+
     return (
         <>
             <Head>
@@ -38,10 +38,7 @@ function MyApp({ Component, pageProps }) {
             </Head>
             {/* global state wrapper (Context Api) */}
             <Provider store={store}>
-                <StoreProvider>
                     <div className="flex flex-col min-h-screen">
-                        {/* private navbar  */}
-                        {/* <PrivateHeader /> */}
                         {/* public header section containing navbar  */}
                         <Header />
                         {/* all pages  */}
@@ -52,7 +49,6 @@ function MyApp({ Component, pageProps }) {
                         {/* footer section  */}
                         <Footer />
                     </div>
-                </StoreProvider>
 
             </Provider>
         </>
@@ -60,7 +56,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 //makeStore function that returns a new store for every request
-const makeStore = () => store;
+// const makeStore = () => store;
 
 //withRedux wrapper that passes the store to the App Component
 // export default withRedux(makeStore)(MyApp);

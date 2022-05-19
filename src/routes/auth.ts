@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { getAuthenticatedUser, login, register } from "../controllers/auth";
+import { getAllUsers, getAuthenticatedUser, login, register } from "../controllers/auth";
 import { isAdmin, verifyToken } from "../middlewares/auth";
 import upload from "../middlewares/upload";
 const router: Router = Router();
@@ -46,4 +46,6 @@ router.post(
 /** get current authenticated user */
 router.get('/getAuthenticatedUser',verifyToken,getAuthenticatedUser)
 /** get current authenticated user - end */
+/** get All users */
+router.get('/users',isAdmin,getAllUsers)
 export default router;

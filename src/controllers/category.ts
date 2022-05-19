@@ -4,6 +4,7 @@ import Category from "../models/Category";
 export const createCategory = async(req:Request,res:Response)=>{
     try{
         const {name,hindiName} = req.body;
+        console.log(name,hindiName);
         if(!name || !hindiName){
             return res.status(400).json({errors:[{msg:"Please enter all fields"}]});
         }
@@ -32,7 +33,7 @@ export const createCategory = async(req:Request,res:Response)=>{
 /** get all category */
 export const getCategories = async(req:Request,res:Response)=>{
     try{
-        const categories = await Category.find();
+        const categories = await Category.find({});
         return res.status(200).json({
             status:200,
             message:"Categories fetched successfully",

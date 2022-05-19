@@ -60,7 +60,7 @@ export const updatePostValidator : ValidationSchema = {
     ...postValidator,
 }
 export const updateStatusValidator : ValidationSchema = {
-    ...idValidator,
+    id:{...idValidator,in:["body"]},
     status:{
         notEmpty: true,
         errorMessage: "Status is Required!",

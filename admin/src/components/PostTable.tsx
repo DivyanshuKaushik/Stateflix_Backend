@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Modal from "./utils/Modal";
 import ViewPost from "./ViewPost";
 import ModalWithBtn from "./utils/ModalWithBtn"
+import PublishPost from "./PublishPost";
 
 interface Column {
     id: "title" | "date";
@@ -105,6 +106,7 @@ export default function PostTable({ posts }:any) {
                                                 {/* view post  */}
                                                 {/* <ModalWithBtn btnName="view"> */}
                                                     <ViewPost post={row} /> 
+                                                    <PublishPost id={row._id} status={row.status} />
                                                 {/* </ModalWithBtn> */}
                                                 {/* <Modal btnName="view" title="View Post">
                                                 </Modal> */}

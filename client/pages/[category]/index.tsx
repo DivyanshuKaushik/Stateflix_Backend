@@ -1,17 +1,15 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import { useAppSelector } from "../../app/store";
-import { Store } from "../../app/StoreProvider";
 import AllCategories from "../../components/AllCategories";
 import PublicPage from "../../components/layout/PublicPage";
 import CategoryNews from "../../components/news/CategoryNews";
-import API from "../../service/API";
+import { API_URL } from "../../config";
+// import API from "../../service/API";
 
 const NewsByCategory = ({posts}) => {
     const router = useRouter();
     const { category }  = router.query;
-    const { state, dispatch } = useContext(Store);
     const categories = useAppSelector(state=>state.category.category)
     return (
         <PublicPage>
@@ -28,7 +26,7 @@ export default NewsByCategory;
 
 export async function getServerSideProps(context){
     const { category } = context.query;
-    const posts = (await axios.get(`${process.env.API_URL}/posts?category=${category}`)).data.data;
+    const posts = (await axios.get(`${API_URL}/posts?category=${category}&page=1&limit=100`)).data.data;
     return {
         props:{posts}
     }
