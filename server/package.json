@@ -56,9 +56,6 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "admin-dependencies": "cd admin && yarn install",
-    "client-dependencies": "cd client && yarn install",
-    "postinstall": "concurrently \"yarn admin-dependencies\" \"yarn client-dependencies\"",
     "build": "npx tsc",
     "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts",
