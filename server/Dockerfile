@@ -16,4 +16,4 @@ COPY package*.json ./
 COPY --from=builder /app/dist ./
 RUN npm install --only=production
 EXPOSE 4000
-CMD ["index.js"]
+CMD ["app.js"]
