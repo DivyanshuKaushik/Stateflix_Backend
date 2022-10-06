@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import Users from "../models/Users";
 import {CustomRequest} from "../middlewares/auth";
+import { JsonResponse } from "../utils";
 
 /** register controller - start */
 export const register = async (req: Request, res: Response) => {
@@ -74,7 +75,8 @@ export const getAuthenticatedUser = async (req: CustomRequest, res: Response) =>
         // verified user from token
         const user = req.user 
         const userData = await Users.findById(user._id)
-        return res.status(200).json({status: 200, message: "User found", user:userData})
+        // return res.status(200).json({status: 200, message: "User found", user:userData})
+        return JsonResponse(res, 200, "User found", userData)
     }catch (error) {
         res.status(500).json({ status: 500, error });
     }

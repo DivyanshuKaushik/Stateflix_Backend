@@ -38,7 +38,7 @@ app.use(cors(corsOptions))
 dotenv.config()
 
 /**  database connection */
-db()
+// db()
 
 /**** all routes - start *****/
 app.get('/',async(req: Request,res: Response)=>{
