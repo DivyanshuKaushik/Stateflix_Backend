@@ -8,6 +8,6 @@ describe("GET /", () => {
     it('welcome message',async function () {
         const res = await chai.request(app).get('/')
         expect(res.status).to.equal(200);
-        expect(res.body.message).to.equal("Welcome to StateFlix");
+        expect(res.body.message).to.equal("Welcome to StateFlix API Service!!");
     });
 });
