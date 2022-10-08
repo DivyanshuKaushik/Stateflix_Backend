@@ -40,6 +40,7 @@ dotenv.config()
 /**  database connection */
 // db()
 
+
 /**** all routes - start *****/
 app.get('/',async(req: Request,res: Response)=>{
     res.status(200).send({message:"Welcome to StateFlix API Service!!"})
