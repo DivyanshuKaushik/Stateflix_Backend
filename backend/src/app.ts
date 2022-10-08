@@ -42,7 +42,7 @@ dotenv.config()
 
 /**** all routes - start *****/
 app.get('/',async(req: Request,res: Response)=>{
-    res.status(200).send({message:"Welcome to StateFlix"})
+    res.status(200).send({message:"Welcome to StateFlix API Service!!"})
 })
 
 app.use('/api/v1',authRoutes)
