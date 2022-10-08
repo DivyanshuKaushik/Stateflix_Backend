@@ -59,7 +59,7 @@
     "build": "npx tsc",
     "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts",
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "test": "mocha --exit -r ts-node/register test/**/*.test.ts",
     "eslint:fix": "eslint --fix"
   },
   "repository": {
