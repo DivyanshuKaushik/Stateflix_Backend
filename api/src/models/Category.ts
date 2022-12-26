@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 interface ICategory extends Document {
     name:String;
     hindiName:String;
+    image:String;
 }
 
 const categorySchema : Schema = new Schema({
@@ -13,8 +14,11 @@ const categorySchema : Schema = new Schema({
     hindiName:{
         type:String,
         required:true
+    },
+    image:{
+        type:String,
     }
-})
+}, { timestamps: true })
 
 const Category = model<ICategory>("Category",categorySchema);
 

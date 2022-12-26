@@ -12,6 +12,8 @@ import db from './db'
 import authRoutes from './routes/auth.routes'
 import postRoutes from './routes/posts.routes'
 import categoryRoutes from './routes/category.routes'
+import pollRoutes from './routes/polls.routes'
+import publisherRoutes from './routes/publisher.routes'
 
 /**  express app initialization */
 const app: Application = express()
@@ -27,7 +29,7 @@ app.use(bodyParser.json())
 
 /**  cors configuration  */
 const corsOptions = {
-    origin:["*"],
+    origin:"*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200
 }
@@ -48,6 +50,8 @@ app.get('/',async(req: Request,res: Response)=>{
 app.use('/api/v1',authRoutes)
 app.use('/api/v1',postRoutes)
 app.use('/api/v1',categoryRoutes)
+app.use('/api/v1',pollRoutes)
+app.use('/api/v1',publisherRoutes)
 /**** all routes - end *****/
 
 /**  error handling - start */

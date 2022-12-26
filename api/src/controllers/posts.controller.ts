@@ -14,16 +14,17 @@ export const createPost = async (req: Request, res: Response) => {
                 .json({ errors: [{ msg: "Please upload an image" }] });
         }
         // destructure all fields from body request
-        const { title, summary, date, category, author, user } = req.body;
+        const { title, content, category, user,tags,source,publisher } = req.body;
         // create new post
         const post = new Posts({
             title,
-            summary,
-            date,
+            content,
             category,
-            author,
-            status: "unpublished",
+            tags,
+            source,
+            status: "published",
             user,
+            publisher
         });
         // save post to database
         const saved = await post.save();
@@ -52,7 +53,7 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
     try {
         // destructure all fields from body request
-        const { id, title, summary, date, category, type } = req.body;
+        const { id, title, content, date, category, type } = req.body;
         // check if image exists
         if (req.file) {
             // delete old image from s3
@@ -67,7 +68,7 @@ export const updatePost = async (req: Request, res: Response) => {
         // update Posts
         const updated = await Posts.findByIdAndUpdate(id, {
             title,
-            summary,
+            content,
             date,
             category,
             type,
@@ -128,21 +129,21 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 /** get all published Posts - Paginated API */
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        let { category, page, limit } = req.query;
+        let { categories, page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let posts;
-        if(category){
-            category = (category as string).split(",") as string[]
-            posts = await Posts.find({status:"published",category:{$in:category}})
+        if(categories){
+            categories = (categories as string).split(",") as string[]
+            posts = await Posts.find({status:"published",category:{$in:categories}})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum);
+                .limit(limitNum).populate("user category publisher");
         }else{
             posts = await Posts.find({status:"published"})
             .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum);
+            .limit(limitNum).populate("user category publisher");
         }
         return res
             .status(200)

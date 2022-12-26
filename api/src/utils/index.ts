@@ -7,5 +7,8 @@ function JsonResponse(res:Response, status:number, message?:string, data?:any,er
     else
         return res.status(200).json({status, message: "Something went wrong"})
 }
+export function JSONResponse(statusCode:number,message:string,data:any=null){
+    return {statusCode,message,data}
+}
 
 export {JsonResponse}
