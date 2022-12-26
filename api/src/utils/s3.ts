@@ -4,9 +4,9 @@ import { config } from 'dotenv'
 config()
 // initialize and configure aws s3 instance
 const s3 = new S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
+    accessKeyId: process.env.DK_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DK_AWS_SECRET_ACCESS_KEY,
+    region: process.env.DK_AWS_REGION,
 });
 
 /** upload image to AWS S3 */
@@ -25,7 +25,7 @@ export const uploadImage = (image: Buffer, name: string) => {
             // upload image to s3 bucket
             const upload = await s3
                 .upload({
-                    Bucket: process.env.AWS_S3_BUCKET_NAME as string,
+                    Bucket: process.env.DK_AWS_S3_BUCKET_NAME as string,
                     Body: optimized_image,
                     Key: img_name,
                     ContentType: "image/webp",
