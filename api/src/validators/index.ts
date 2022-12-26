@@ -33,11 +33,7 @@ export const postValidator : ValidationSchema = {
         },
         errorMessage: "Title is Required!",
     },
-    author:{
-        notEmpty: true,
-        errorMessage: "Author is Required!",
-    },
-    summary: {
+    content: {
         notEmpty: true,
         isLength:{
             options:{min:10},

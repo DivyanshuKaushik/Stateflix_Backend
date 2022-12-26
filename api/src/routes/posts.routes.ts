@@ -29,7 +29,7 @@ const router: Router = Router();
 /** create post  */
 // POST /api/v1/createPost @access Private - Admin,Editor,Author
 router.post(
-    "/createPost",
+    "/posts",
     isReporter,
     upload.single("image"),
     // validation of req body through validator schema

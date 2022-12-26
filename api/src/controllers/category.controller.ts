@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
 import Category from "../models/Category";
+import { uploadImage } from "../utils/s3";
 /** create category controller */
 export const createCategory = async(req:Request,res:Response)=>{
     try{
+        // check if image exists
+        if (!req.file) {
+            return res
+                .status(400)
+                .json({ errors: [{ msg: "Please upload an image" }] });
+        }
         const {name,hindiName} = req.body;
         console.log(name,hindiName);
         if(!name || !hindiName){
@@ -17,10 +24,19 @@ export const createCategory = async(req:Request,res:Response)=>{
             hindiName
         });
         const saved = await category.save();
+         // upload image to s3
+        // image is as req.file - img_name is as folder/postID.webp
+        const img_name = `categories/${saved._id}`;
+        const img_url = await uploadImage(
+            req.file?.buffer as Buffer,
+            img_name as string
+        );
+        await Category.findByIdAndUpdate(saved._id, { image: img_url });
+        // send response back
         return res.status(201).json({
-            status:201,
+            status: 201,
             message:"Category created successfully",
-            data:saved
+            data: { category: saved, image: img_url },
         });
 
     }catch(error){

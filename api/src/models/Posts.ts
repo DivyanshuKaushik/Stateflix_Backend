@@ -2,14 +2,14 @@ import { Schema, model, Types } from "mongoose";
 
 export interface IPost extends Document {
     title: string;
-    summary: String;
+    content: String;
     image: String;
-    author: String;
-    date: Date;
-    category: String;
-    breaking: String;
+    category: Types.ObjectId;
     status: String;
+    tags:[string];
+    source: string;
     user: Types.ObjectId;
+    publisher: Types.ObjectId;
 }
 
 const postSchema: Schema = new Schema(
@@ -18,36 +18,38 @@ const postSchema: Schema = new Schema(
             type: String,
             required: true,
         },
-        summary: {
-            type: String,
-            required: true,
-        },
-        author: {
+        content: {
             type: String,
             required: true,
         },
         image: {
             type: Object,
         },
-        date: {
-            type: String,
-            required: true,
-        },
         category: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "Category",
             required: true,
-        },
-        breaking: {
-            type: Boolean,
-            default:false,
         },
         status: {
             type: String,
             required: true,
         },
+        source: {
+            type: String,
+            // required: true,
+        },
+        tags: {
+            type: Array,
+        },
         user: {
             type: Schema.Types.ObjectId,
             ref: "User",
+            required: true,
+        },
+        publisher: {
+            type: Schema.Types.ObjectId,
+            ref: "Publisher",
+            required: true,
         },
     },
     { timestamps: true }
