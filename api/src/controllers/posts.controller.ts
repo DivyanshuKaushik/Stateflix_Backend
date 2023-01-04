@@ -128,7 +128,7 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 /** get all published Posts - Paginated API */
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        let { category,publisher, page, limit } = req.query;
+        let { category,publishers, page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let posts;
@@ -137,11 +137,12 @@ export const getPosts = async (req: Request, res: Response) => {
             posts = await Posts.find({status:"published",category})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum).populate("user category publisher");
+                .limit(limitNum).populate("user category publishers");
         }
          // get post by publisher 
-        else if(publisher){
-            posts = await Posts.find({status:"published",publisher})
+        else if(publishers){
+            publishers = (publishers as String).split(",");
+            posts = await Posts.find({status:"published",publisher:{ $in: publishers }})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
                 .limit(limitNum).populate("user category publisher");

@@ -10,6 +10,7 @@ router.get('/categories',getCategories)
 // create new category 
 // POST /api/v1/category @access Private Editor/Admin
 router.post('/categories' ,upload.single("image"),createCategory)
+
 // deletecategory 
 // DELETE /api/v1/category @access Private Editor/Admin
 router.delete('/categories/:id',isEditor,deleteCategory)

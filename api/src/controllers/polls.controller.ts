@@ -4,16 +4,21 @@ import { JSONResponse } from "../utils";
 
 export const getPolls = async (req: Request, res: Response) => {
     try {
-        let data=null;
-        // let {publishers} = req.query;
-        // publishers = String(publishers).split(",");
-        // if(publishers){
-        //     data = await Polls.find({publisher:{$in:publishers}}).sort({ updatedAt: -1 });
+        let { publisher, page, limit } = req.query;
+        const pageNum = parseInt(page as string);
+        const limitNum = parseInt(limit as string);
 
-        // }else{
-        //     data = await Polls.find().sort({ updatedAt: -1 });
-        // }
-            data = await Polls.find().sort({ updatedAt: -1 }).populate('publisher');
+        let data=null;
+        // publishers = String(publishers).split(",");
+        if(publisher){
+            data = await Polls.find({publisher}).sort({ 'updatedAt': -1 })
+                .skip((pageNum - 1) * limitNum)
+                .limit(limitNum).populate("publisher");;
+        }else{
+            data = await Polls.find().sort({ 'updatedAt': -1 })
+                .skip((pageNum - 1) * limitNum)
+                .limit(limitNum).populate("publisher");;
+        }
         return res.status(200).json(JSONResponse(200,"Polls fetched successfully",data));
     } catch (error) {
         return res.status(500).json({ status: 500, error });

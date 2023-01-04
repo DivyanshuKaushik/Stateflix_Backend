@@ -94,10 +94,14 @@ export const getAuthenticatedUser = async (req: CustomRequest, res: Response) =>
 /** get all users */
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
+        const { page, limit } = req.query;
+        const pageNum = parseInt(page as string);
+        const limitNum = parseInt(limit as string);
+
         // find all users in db
-        const users = await Users.find();
-        // check if password is correct
-        res.status(200).json({
+        const users = await Users.find().collation({locale:'en',strength: 2}).sort({name:1}).skip((pageNum - 1) * limitNum)
+            .limit(limitNum);
+        return res.status(200).json({
             status: 200,
             message: "User fetched successfully",
             data:users
