@@ -22,7 +22,7 @@ export const createPost = async (req: Request, res: Response) => {
             category,
             tags,
             source,
-            status: "published",
+            status: "unpublished",
             user,
             publisher
         });
@@ -53,7 +53,7 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
     try {
         // destructure all fields from body request
-        const { id, title, content, date, category, type } = req.body;
+        const { id, title, content, category, source,tags,publisher } = req.body;
         // check if image exists
         if (req.file) {
             // delete old image from s3
@@ -69,9 +69,8 @@ export const updatePost = async (req: Request, res: Response) => {
         const updated = await Posts.findByIdAndUpdate(id, {
             title,
             content,
-            date,
             category,
-            type,
+            source,tags,publisher
         });
         // send response back
         return res.status(200).json({
@@ -129,17 +128,26 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 /** get all published Posts - Paginated API */
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        let { categories, page, limit } = req.query;
+        let { category,publisher, page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let posts;
-        if(categories){
-            categories = (categories as string).split(",") as string[]
-            posts = await Posts.find({status:"published",category:{$in:categories}})
+        // get post by category 
+        if(category){
+            posts = await Posts.find({status:"published",category})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
                 .limit(limitNum).populate("user category publisher");
-        }else{
+        }
+         // get post by publisher 
+        else if(publisher){
+            posts = await Posts.find({status:"published",publisher})
+                .sort({ 'updatedAt': -1 })
+                .skip((pageNum - 1) * limitNum)
+                .limit(limitNum).populate("user category publisher");
+        }
+         // get all post by default
+        else{
             posts = await Posts.find({status:"published"})
             .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
@@ -159,37 +167,11 @@ export const getPosts = async (req: Request, res: Response) => {
 };
 /** get all published Posts - end */
 
-/** get all published Posts by category - Paginated API */
-export const getPostsByCategory = async (req: Request, res: Response) => {
-    try {
-        const { category, page, limit } = req.query;
-        const pageNum = parseInt(page as string);
-        const limitNum = parseInt(limit as string);
-        const posts = await Posts.find({ category,status:"published" })
-            .sort({ 'updatedAt': -1 })
-            .skip((pageNum - 1) * limitNum)
-            .limit(limitNum);
-        return res
-            .status(200)
-            .json({
-                status: 200,
-                message: "Posts fetched successfully",
-                data: posts,
-            });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ status: 500, error });
-    }
-};
-/** get all published Posts by category - end */
-
 /** get single published Posts */
 export const getPost = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        console.log(id)
         const post = await Posts.findOne({_id:id,status:"published"});
-        console.log(post)
         return res
             .status(200)
             .json({
@@ -210,7 +192,7 @@ export const getUnpublishedPosts = async (req: Request, res: Response) => {
         const limitNum = parseInt(limit as string);
         const posts = await Posts.find({status:"unpublished"}).sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum);
+            .limit(limitNum).populate("user category publisher");
         return res
             .status(200)
             .json({
@@ -232,77 +214,36 @@ export const getUserPosts =async (req: Request, res: Response) => {
         const { page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
-        // const published = await Posts.find({user,status:"published"})
-        //     .sort({ 'updatedAt': -1 })
-        //     .skip((pageNum - 1) * limitNum)
-        //     .limit(limitNum);
-        // const unpublished = await Posts.find({user,status:"unpublished"})
-        //     .sort({ 'updatedAt': -1 })
-        //     .skip((pageNum - 1) * limitNum)
-        //     .limit(limitNum);
-        // const rejected = await Posts.find({user,status:"rejected"})
-        //     .sort({ 'updatedAt': -1 })
-        //     .skip((pageNum - 1) * limitNum)
-        //     .limit(limitNum);
-        // return res
-        //     .status(200)
-        //     .json({
-        //         status: 200,
-        //         message: "Posts fetched successfully",
-        //         data: {published,unpublished,rejected},
-        //     });
-
-        // mongoose aggregate user and find all posts of user and group by status
-        const posts = await Posts.aggregate([
-            {
-                $match: {
-                    user: new Types.ObjectId(user),
-                }
-            },
-            {$sort: { updatedAt: -1 }},
-            {$skip: (parseInt(page as string) - 1) * parseInt(limit as string)},
-            {$limit: parseInt(limit as string)},
-            // {
-            //     $group: {
-            //         _id: "$status",
-            //         posts: { $push: "$$ROOT"},
-            //     },
-            // },
-
-        ])
-        // const posts = await Posts.find({user}).populate("user","name email")
-        res.status(200).json(posts);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ status: 500, error });
-    }
-};
-
-/** get all post for index page */
-export const getIndexPosts = async (req: Request, res: Response) => {
-    try {
-        const category = await Category.find()
-        const posts = category.map(async (cat) => {
-            const post = await Posts.find({category:cat.name,status:"published"})
-                .sort({ 'updatedAt': -1 })
-                .limit(10);
-            return {category:cat.name,posts:post};
-        }
-        );
-        const post = await Promise.all(posts);
-        console.log(post)
+        const posts = await Posts.find({user})
+            .sort({ 'updatedAt': -1 })
+            .skip((pageNum - 1) * limitNum)
+            .limit(limitNum).populate("user category publisher");
         return res
             .status(200)
             .json({
                 status: 200,
                 message: "Posts fetched successfully",
-                data: post,
+                data: posts,
             });
+
+        // mongoose aggregate user and find all posts of user and group by status
+        // const posts = await Posts.aggregate([
+        //     {
+        //         $match: {
+        //             user: new Types.ObjectId(user),
+        //         }
+        //     },
+        //     {$sort: { updatedAt: -1 }},
+        //     {$skip: (parseInt(page as string) - 1) * parseInt(limit as string)},
+        //     {$limit: parseInt(limit as string)},
+
+        // ])
+        // const posts = await Posts.find({user}).populate("user","name email")
+        // res.status(200).json(posts);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ status: 500, error });
     }
-}
-/** get all post for index page -end */
+};
 
 

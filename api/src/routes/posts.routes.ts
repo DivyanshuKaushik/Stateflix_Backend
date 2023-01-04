@@ -3,10 +3,8 @@ import { checkSchema } from "express-validator";
 import {
     createPost,
     deletePost,
-    getIndexPosts,
     getPost,
     getPosts,
-    getPostsByCategory,
     getUnpublishedPosts,
     getUserPosts,
     updatePost,
@@ -78,6 +76,7 @@ router.delete(
 /** delete post - end */
 
 /** get methods to fetch articles - Private APIs */
+
 // GET /api/v1/posts/unpublished @access Private - Editor,Admin
 router.get("/posts/unpublished", isEditor, getUnpublishedPosts);
 
@@ -93,21 +92,13 @@ router.get(
 
 /** get methods to fetch articles - Public APIs */
 // GET /api/v1/posts | /api/v1/posts?page=?&limit=?  @access Public
+// GET /api/v1/posts | /api/v1/posts?category=?&page=?&limit=?  @access Public
+// GET /api/v1/posts | /api/v1/posts?publisher=?&page=?&limit=?  @access Public
 router.get("/posts", getPosts);
-
-// // GET /api/v1/getPostsByCategory?category=? | /api/v1/getPostsByCategory?category=?&page=?&limit=?  @access Public
-// router.get(
-//     "/getPostsByCategory",
-//     checkSchema(categoryValidator),
-//     validateRequest,
-//     getPostsByCategory
-// );
 
 // GET /api/v1/getArticle @access Public
 router.get("/posts/:id", checkSchema(idValidator), validateRequest, getPost);
 
-// GET /api/v1/allPosts @access Public
-router.get('/allPosts',getIndexPosts)
 
 /** get methods to fetch articles - end */
 
