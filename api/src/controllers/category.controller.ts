@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Category from "../models/Category";
-import { uploadImage } from "../utils/s3";
+import { deleteImage, uploadImage } from "../utils/s3";
 /** create category controller */
 export const createCategory = async(req:Request,res:Response)=>{
     try{
@@ -66,6 +66,11 @@ export const getCategories = async(req:Request,res:Response)=>{
 export const deleteCategory = async(req:Request,res:Response)=>{
     try{
         const {id} = req.params;
+
+        // delete Posts image from s3
+        const img_key = "categories/" + id + ".webp";
+        await deleteImage(img_key);
+
         const category = await Category.findByIdAndDelete(id);
         return res.status(200).json({
             status:200,
