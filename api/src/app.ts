@@ -14,6 +14,7 @@ import postRoutes from './routes/posts.routes'
 import categoryRoutes from './routes/category.routes'
 import pollRoutes from './routes/polls.routes'
 import publisherRoutes from './routes/publisher.routes'
+import { genAPIKey } from './utils'
 
 /**  express app initialization */
 const app: Application = express()
@@ -41,6 +42,24 @@ dotenv.config()
 
 /**  database connection */
 db()
+
+// generate api key 
+// console.log(genAPIKey())
+
+// check if api key exists
+app.use((req: Request,res: Response,next: NextFunction)=>{
+    try {
+        const apiKey = req.headers['x-api-key']
+        if(apiKey === process.env.STATEFLIX_API_KEY){
+            next()
+        }else{
+            next(new createHttpError.Unauthorized())
+        }
+        
+    } catch (error) {
+        next(new createHttpError.Unauthorized())
+    }
+})
 
 /**** all routes - start *****/
 app.get('/',async(req: Request,res: Response)=>{
