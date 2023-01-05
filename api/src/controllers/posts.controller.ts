@@ -17,8 +17,8 @@ export const createPost = async (req: Request, res: Response) => {
         const { title, content, category, user,tags,source,publisher } = req.body;
         // create new post
         const post = new Posts({
-            title,
-            content,
+            title:title.trim(),
+            content:content.trim(),
             category,
             tags,
             source,
@@ -108,7 +108,7 @@ export const deletePost = async (req: Request, res: Response) => {
 /** post status controller - start  */
 export const updatePostStatus = async (req: Request, res: Response) => {
     try {
-        const {id,status} = req.params
+        const {id,status} = req.body
         console.log(status,id)
         const updated = await Posts.findByIdAndUpdate(id, { status });
         return res
@@ -128,16 +128,19 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 /** get all published Posts - Paginated API */
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        let { category,publishers, page, limit } = req.query;
+        let { categories,publishers, page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
+        let totalCount;
         let posts;
-        // get post by category 
-        if(category){
-            posts = await Posts.find({status:"published",category})
+        // get post by categories 
+        if(categories){
+            categories = (categories as String).split(",");
+            posts = await Posts.find({status:"published",category:{ $in: categories }})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum).populate("user category publishers");
+                .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published",category:{ $in: categories }});
         }
          // get post by publisher 
         else if(publishers){
@@ -145,20 +148,23 @@ export const getPosts = async (req: Request, res: Response) => {
             posts = await Posts.find({status:"published",publisher:{ $in: publishers }})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum).populate("user category publisher");
+                .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published",publisher:{ $in: publishers }});
         }
          // get all post by default
         else{
             posts = await Posts.find({status:"published"})
             .sort({ 'updatedAt': -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum).populate("user category publisher");
+            .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published"});
         }
         return res
             .status(200)
             .json({
                 status: 200,
                 message: "Posts fetched successfully",
+                totalCount,
                 data: posts,
             });
     } catch (error) {

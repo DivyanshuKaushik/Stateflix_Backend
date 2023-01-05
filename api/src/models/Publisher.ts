@@ -10,6 +10,10 @@ const PublisherSchema: Schema = new Schema({
         type: String,
         required: true,
     },
+    slug: {
+        type: String,
+        required: true,
+    },
     image: {
         type: String,
     }

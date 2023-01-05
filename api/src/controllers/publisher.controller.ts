@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Publisher from "../models/Publisher";
+import Users from "../models/Users";
 import { JSONResponse } from "../utils";
 
 export const getPublishers = async (req: Request, res: Response) => {
@@ -16,10 +17,11 @@ export const getPublishers = async (req: Request, res: Response) => {
 };
 
 export const getPublisher = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { slug } = req.params;
     try {
-        const publisher = await Publisher.findById(id);
-        res.status(200).json(publisher);
+        const publisher = await Publisher.findOne({ slug });
+        // const followers = await Users. 
+        return res.status(200).json(JSONResponse(200, "Publisher fetched successfully", publisher));
     } catch (error) {
         return res.status(500).json({ status: 500, error });
     }
@@ -33,7 +35,8 @@ export const createPublisher = async (req: Request, res: Response) => {
             .json(JSONResponse(400, "Error: Please enter all fields"));
     }
     try {
-        const newPublisher = new Publisher({ name, image });
+        const slug = name.toLowerCase().split(" ").join("-");
+        const newPublisher = new Publisher({ name, image, slug });
         await newPublisher.save();
         res.status(201).json(
             JSONResponse(201, "Publisher created successfully", newPublisher)

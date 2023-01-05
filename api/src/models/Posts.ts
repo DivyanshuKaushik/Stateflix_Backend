@@ -26,8 +26,7 @@ const postSchema: Schema = new Schema(
             type: Object,
         },
         category: {
-            type: Schema.Types.ObjectId,
-            ref: "Category",
+            type: String,
             required: true,
         },
         status: {
@@ -36,7 +35,7 @@ const postSchema: Schema = new Schema(
         },
         source: {
             type: String,
-            // required: true,
+            required: true,
         },
         tags: {
             type: Array,
@@ -47,8 +46,7 @@ const postSchema: Schema = new Schema(
             required: true,
         },
         publisher: {
-            type: Schema.Types.ObjectId,
-            ref: "Publisher",
+            type: String,
             required: true,
         },
     },
