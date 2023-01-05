@@ -56,7 +56,7 @@ router.put(
 /** update post status */
 // PATCH /api/v1/updatePostStatus @access Private - Admin,Editor
 router.patch(
-    "/updatePostStatus/:id/:status",
+    "/posts/status",
     isEditor,
     // checkSchema(updateStatusValidator),
     // validateRequest,

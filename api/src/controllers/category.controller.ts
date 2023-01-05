@@ -20,7 +20,7 @@ export const createCategory = async(req:Request,res:Response)=>{
             return res.status(400).json({errors:[{msg:"Category already exists"}]});
         }
         const category = new Category({
-            name,
+            name:name.lowerCase().split(" ").join("-"),
             hindiName
         });
         const saved = await category.save();
