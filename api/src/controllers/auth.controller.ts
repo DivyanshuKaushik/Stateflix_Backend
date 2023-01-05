@@ -59,8 +59,8 @@ export const login = async (req: Request, res: Response) => {
         // generate auth token
         const token = await existingUser.generateAuthToken();
         // send accessToken in cookies 
-        // res.cookie("accessToken", token, { httpOnly: true ,expires: new Date().setDate(new Date().getDate() + 5) ,secure: true, sameSite: 'none' });
-        res.status(200).json({
+        res.cookie("accessToken", token, { httpOnly: true ,expires: new Date(new Date().getTime()+ 1000 * 60 * 60 * 24 * 10) ,secure: true, sameSite: 'none' });
+        return res.status(200).json({
             status: 200,
             message: "User logged in successfully",
             data:{

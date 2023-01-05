@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import db from './db'
 
 /**  import all routes */ 
@@ -27,6 +28,9 @@ app.use(helmet());
 /**  bodyParser configuration */
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+
+// parse cookies 
+app.use(cookieParser())
 
 /**  cors configuration  */
 const corsOptions = {
@@ -50,7 +54,7 @@ db()
 app.use((req: Request,res: Response,next: NextFunction)=>{
     try {
         const apiKey = req.headers['x-api-key']
-        // console.log(req.headers)
+        console.log(req.headers['x-api-key'])
         req.headers["Accept-Encoding"] = "gzip,deflate,compress"
         if(apiKey === process.env.STATEFLIX_API_KEY){
             next()
