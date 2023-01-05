@@ -44,7 +44,7 @@ export const isReporter = async (req: Request, res: Response, next: NextFunction
         const token = req.headers.authorization
         if(!token) return res.status(401).json({message: 'No token provided'})
         const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as JwtPayload
-        if(!(decoded.role === "admin" || decoded.role === "reporter")) return res.status(401).json({message: 'Unauthorized'})
+        if(!(decoded.role === "admin" || decoded.role === "reporter" || decoded.role==="editor")) return res.status(401).json({message: 'Unauthorized'})
         next()
     }catch(error){
         res.status(403).json({
