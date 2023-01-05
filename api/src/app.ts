@@ -34,7 +34,7 @@ app.use(cookieParser())
 
 /**  cors configuration  */
 const corsOptions = {
-    origin:["*", "http://localhost:3000","shortnews-web.vercel.app"],
+    origin:["*", "http://localhost:3000","https://shortnews-web.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200,
     // credentials:true,
