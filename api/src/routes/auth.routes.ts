@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { getAllUsers, getAuthenticatedUser, login, register } from "../controllers/auth.controller";
+import { changePassword, deleteUser, getAllUsers, getAuthenticatedUser, login, register } from "../controllers/auth.controller";
 import { isAdmin, verifyToken } from "../middlewares/auth";
 import upload from "../middlewares/upload";
 const router: Router = Router();
@@ -48,4 +48,11 @@ router.get('/getAuthenticatedUser',verifyToken,getAuthenticatedUser)
 /** get current authenticated user - end */
 /** get All users */
 router.get('/users',isAdmin,getAllUsers)
+
+// DELETE /users/:id @access Private - Admin
+router.delete("/users/:id", isAdmin, deleteUser);
+
+// PATCH /users/changePassword @access Private 
+router.patch("/users/changePassword",verifyToken, changePassword);
+
 export default router;
