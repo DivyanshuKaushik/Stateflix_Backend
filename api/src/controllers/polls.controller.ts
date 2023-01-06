@@ -84,6 +84,7 @@ export const updatePoll = async (req: Request, res: Response) => {
         return res.status(500).json({ status: 500, error });
     }
 }
+
 export const deletePoll = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
