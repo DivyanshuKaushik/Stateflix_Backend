@@ -41,7 +41,7 @@ router.post(
 /** update post  */
 // POST /api/v1/createPost @access Private - Admin,Editor,Author
 router.put(
-    "/updatePost",
+    "/posts",
     isReporter,
     upload.single("image"),
     // validate id to update post
@@ -65,9 +65,9 @@ router.patch(
 /** update post status - end*/
 
 /** delete post  */
-// DELETE /api/v1/deletePost/id @access Private - Admin,Editor
+// DELETE /api/v1/posts/id @access Private - Admin,Editor
 router.delete(
-    "/deletePost/:id",
+    "/posts/:id",
     isEditor,
     // validate id to update post
     checkSchema(idValidator),

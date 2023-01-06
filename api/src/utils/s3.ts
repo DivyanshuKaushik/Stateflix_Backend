@@ -47,7 +47,7 @@ export const deleteImage = (name: string) => {
     return new Promise(async (resolve, reject) => {
         try {
             const params = {
-                Bucket: process.env.AWS_S3_BUCKET_NAME as string,
+                Bucket: process.env.DK_AWS_S3_BUCKET_NAME as string,
                 Key: name,
             };
             // delete image from bucket
