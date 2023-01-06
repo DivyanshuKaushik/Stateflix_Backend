@@ -20,7 +20,7 @@ export const createPost = async (req: Request, res: Response) => {
             title:title.trim(),
             content:content.trim(),
             category,
-            tags,
+            tags:JSON.parse(tags),
             source,
             status: "unpublished",
             user,
@@ -70,7 +70,7 @@ export const updatePost = async (req: Request, res: Response) => {
             title,
             content,
             category,
-            source,tags,publisher
+            source,tags:JSON.parse(tags),publisher
         });
         // send response back
         return res.status(200).json({

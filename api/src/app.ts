@@ -15,7 +15,8 @@ import postRoutes from './routes/posts.routes'
 import categoryRoutes from './routes/category.routes'
 import pollRoutes from './routes/polls.routes'
 import publisherRoutes from './routes/publisher.routes'
-import { genAPIKey } from './utils'
+import adsRoutes from './routes/ads.routes'
+// import { genAPIKey } from './utils'
 
 /**  express app initialization */
 const app: Application = express()
@@ -78,6 +79,7 @@ app.use('/api/v1',postRoutes)
 app.use('/api/v1',categoryRoutes)
 app.use('/api/v1',pollRoutes)
 app.use('/api/v1',publisherRoutes)
+app.use('/api/v1',adsRoutes)
 /**** all routes - end *****/
 
 /**  error handling - start */

@@ -1,8 +1,12 @@
 import { Schema, model,Types } from "mongoose";
 
+interface IOption {
+    name: string;
+    image: string;
+}
 interface IPoll extends Document {
     title: string;
-    options: [object];
+    options: IOption[];
     expiryInDays: number;
     publisher:Types.ObjectId;
 }
