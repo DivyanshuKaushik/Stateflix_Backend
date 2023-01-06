@@ -1,0 +1,40 @@
+0000000000000000000000000000000000000000 6c401c630266f3c8498d0e0609c5eff6b5dbf55d DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664718915 +0530	clone: from https://github.com/DivyanshuKaushik/Stateflix.git
+6c401c630266f3c8498d0e0609c5eff6b5dbf55d 0000000000000000000000000000000000000000 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664991559 +0530	Branch: renamed refs/heads/main to refs/heads/dev
+0000000000000000000000000000000000000000 6c401c630266f3c8498d0e0609c5eff6b5dbf55d DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664991559 +0530	Branch: renamed refs/heads/main to refs/heads/dev
+6c401c630266f3c8498d0e0609c5eff6b5dbf55d 1a98a7eccaa3c6eb3a3c5286c65d0261a48e4fb9 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664991775 +0530	commit: addes server code to new folder
+1a98a7eccaa3c6eb3a3c5286c65d0261a48e4fb9 56622e0275e595920d1d483e719dff2a45017da8 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664993407 +0530	commit: added dockerfile to server
+56622e0275e595920d1d483e719dff2a45017da8 503fe2315a42e8ca0c65377adbfac753a7e22a09 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1664997106 +0530	commit: dockerized server
+503fe2315a42e8ca0c65377adbfac753a7e22a09 8a0d8871193e9b5cbecafae0244ee0db3e8a4eb9 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665042439 +0530	commit: dockerized stateflix
+8a0d8871193e9b5cbecafae0244ee0db3e8a4eb9 f7711b0f14d0057d754c15e4934dd8a152ed3a29 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665237916 +0530	commit: dockerized stateflix
+f7711b0f14d0057d754c15e4934dd8a152ed3a29 4b3542cbcdc0c8380e63d67456db5ed33cef405c DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665237959 +0530	pull: Merge made by the 'ort' strategy.
+4b3542cbcdc0c8380e63d67456db5ed33cef405c 17ae10a7d57a706d5a389f562ed4901d112aaf95 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665239073 +0530	commit: push to aws eb
+17ae10a7d57a706d5a389f562ed4901d112aaf95 435d72bd40d998f1931ca13020f6589ccc1fab18 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665239982 +0530	commit: push to aws eb with updated policy
+435d72bd40d998f1931ca13020f6589ccc1fab18 37d55c77125a98b53caa50fc75f319cfe26c8acf DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665248806 +0530	commit: push to aws eb with updated keys
+37d55c77125a98b53caa50fc75f319cfe26c8acf 9745c4891ed72b11d7c28ea831aa37d4b096c923 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665250812 +0530	commit: added test script
+9745c4891ed72b11d7c28ea831aa37d4b096c923 88d9a60aa44625e7b78a88fd3a3cae634566a793 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665250931 +0530	commit: added test script
+88d9a60aa44625e7b78a88fd3a3cae634566a793 2e9d882700e5d2ccf654afc9f0e92a602a3cb43c DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665251379 +0530	commit: some changes
+2e9d882700e5d2ccf654afc9f0e92a602a3cb43c 56a1f22bfa71f78b4c3ebf55ff371bad2f63b4ab DivyanshuKaushik <divyanshukaushik44@gmail.com> 1665251675 +0530	commit: some changes for test
+56a1f22bfa71f78b4c3ebf55ff371bad2f63b4ab 24a6fa18d4eafd1e4a14969abb36cb9a48eaf2e4 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1671510857 +0530	commit: major changes
+24a6fa18d4eafd1e4a14969abb36cb9a48eaf2e4 a6e2aa1d5ba25d17684d5a8564c3ed24debe880c DivyanshuKaushik <divyanshukaushik44@gmail.com> 1671526866 +0530	commit: major changes
+a6e2aa1d5ba25d17684d5a8564c3ed24debe880c cdeb8f461992d8506a929ea923d68e1be3f2e333 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672074509 +0530	commit: api changes
+cdeb8f461992d8506a929ea923d68e1be3f2e333 2735d3591ecf91d568cbae9176075f1f9f873a9e DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672074834 +0530	commit: api changes
+2735d3591ecf91d568cbae9176075f1f9f873a9e d3e4adaef0822dc43d718b3b835ba7ab4204aed3 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672075421 +0530	commit: api changes
+d3e4adaef0822dc43d718b3b835ba7ab4204aed3 443ddb2cd1c6076172fd5048d35aaefadf6212ba DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672077235 +0530	commit: api changes
+443ddb2cd1c6076172fd5048d35aaefadf6212ba f1c2f413e9fd1d9c017c277fa1de205dc0b62ccd DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672077617 +0530	commit: api changes
+f1c2f413e9fd1d9c017c277fa1de205dc0b62ccd 1b232187a54569ace3560a3e96f3c3c47fda7173 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672837649 +0530	commit: post handlers updated
+1b232187a54569ace3560a3e96f3c3c47fda7173 7ff0422c2ca12244860cc2c88c81bc2f733848ae DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672837993 +0530	commit: users controllers updated
+7ff0422c2ca12244860cc2c88c81bc2f733848ae ab323efee4dd2446c323b232ac37f1a88b7b52b2 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672838153 +0530	commit: categories controllers updated
+ab323efee4dd2446c323b232ac37f1a88b7b52b2 532c00bc8ebc6d6dd9675a57e0cce2626b6974ad DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672838558 +0530	commit: polls controllers updated
+532c00bc8ebc6d6dd9675a57e0cce2626b6974ad 898290eb0d876a2487eb0539c67b8b6fca706e00 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672839150 +0530	commit: polls controllers updated
+898290eb0d876a2487eb0539c67b8b6fca706e00 e2cd009b9f71545f8b635fae34b69bdb5649dc15 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672840070 +0530	commit: api-key-setup
+e2cd009b9f71545f8b635fae34b69bdb5649dc15 1f8a8e8def1535bf96cf8898210f7ecc628d8820 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672894822 +0530	commit: updates
+1f8a8e8def1535bf96cf8898210f7ecc628d8820 e85d33bc771d7e7e645d1b034b75f8554e1be6f5 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672927997 +0530	commit: api updated
+e85d33bc771d7e7e645d1b034b75f8554e1be6f5 63738102371a08f7be7d19eea858588824042af6 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672939128 +0530	commit: api updated
+63738102371a08f7be7d19eea858588824042af6 07dcdce7072c6a35514cb791e5144faf39ce7025 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672940060 +0530	commit: role uodated
+07dcdce7072c6a35514cb791e5144faf39ce7025 0000000000000000000000000000000000000000 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672942537 +0530	Branch: renamed refs/heads/dev to refs/heads/main
+0000000000000000000000000000000000000000 07dcdce7072c6a35514cb791e5144faf39ce7025 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672942537 +0530	Branch: renamed refs/heads/dev to refs/heads/main
+07dcdce7072c6a35514cb791e5144faf39ce7025 f952a838903a9fd70d8d2175cc68eed4a1417abc DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672942552 +0530	commit: cors fixed
+f952a838903a9fd70d8d2175cc68eed4a1417abc 0000000000000000000000000000000000000000 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672942591 +0530	Branch: renamed refs/heads/main to refs/heads/dev
+0000000000000000000000000000000000000000 f952a838903a9fd70d8d2175cc68eed4a1417abc DivyanshuKaushik <divyanshukaushik44@gmail.com> 1672942591 +0530	Branch: renamed refs/heads/main to refs/heads/dev
+f952a838903a9fd70d8d2175cc68eed4a1417abc 77683299f07ef63dc6db73c2bbce9228b3767778 DivyanshuKaushik <divyanshukaushik44@gmail.com> 1673029792 +0530	commit: major update
+77683299f07ef63dc6db73c2bbce9228b3767778 0c07fa40ab2b70a1796a50a0fed2cc8ed952d05b DivyanshuKaushik <divyanshukaushik44@gmail.com> 1673029847 +0530	commit: major update
