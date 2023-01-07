@@ -154,11 +154,11 @@ export const getPosts = async (req: Request, res: Response) => {
         else if(tags){
             tags = (tags as String).split(",");
             // tags field is a array in mongoDb so we use $in operator to find all posts with tags
-            posts = await Posts.find({status:"published",tags:{$all:tags}})
+            posts = await Posts.find({status:"published",tags:{$in:tags}})
                 .sort({ 'updatedAt': -1 })
                 .skip((pageNum - 1) * limitNum)
                 .limit(limitNum).populate("user");
-            totalCount = await Posts.countDocuments({status:"published",tags:{$all:tags}});
+            totalCount = await Posts.countDocuments({status:"published",tags:{$in:tags}});
         }    
          // get all post by default
         else{

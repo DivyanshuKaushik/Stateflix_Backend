@@ -16,6 +16,7 @@ import categoryRoutes from './routes/category.routes'
 import pollRoutes from './routes/polls.routes'
 import publisherRoutes from './routes/publisher.routes'
 import adsRoutes from './routes/ads.routes'
+import trendingRoutes from './routes/trending.routes'
 // import { genAPIKey } from './utils'
 
 /**  express app initialization */
@@ -80,6 +81,7 @@ app.use('/api/v1',categoryRoutes)
 app.use('/api/v1',pollRoutes)
 app.use('/api/v1',publisherRoutes)
 app.use('/api/v1',adsRoutes)
+app.use('/api/v1',trendingRoutes)
 /**** all routes - end *****/
 
 /**  error handling - start */
