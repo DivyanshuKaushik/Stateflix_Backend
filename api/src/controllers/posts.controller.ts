@@ -128,7 +128,7 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 /** get all published Posts - Paginated API */
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        let { categories,publishers, page, limit } = req.query;
+        let { categories,publishers, page, limit,tags } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let totalCount;
@@ -151,6 +151,15 @@ export const getPosts = async (req: Request, res: Response) => {
                 .limit(limitNum).populate("user");
             totalCount = await Posts.countDocuments({status:"published",publisher:{ $in: publishers }});
         }
+        else if(tags){
+            tags = (tags as String).split(",");
+            // tags field is a array in mongoDb so we use $in operator to find all posts with tags
+            posts = await Posts.find({status:"published",tags:{$all:tags}})
+                .sort({ 'updatedAt': -1 })
+                .skip((pageNum - 1) * limitNum)
+                .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published",tags:{$all:tags}});
+        }    
          // get all post by default
         else{
             posts = await Posts.find({status:"published"})
@@ -253,4 +262,43 @@ export const getUserPosts =async (req: Request, res: Response) => {
     }
 };
 
-
+/** get trending Posts - Paginated API */
+export const getTrendingPosts = async (req: Request, res: Response) => {
+    try {
+        let { tags,page,limit } = req.query;
+        const pageNum = parseInt(page as string);
+        const limitNum = parseInt(limit as string);
+        let totalCount;
+        let posts;
+        // get post by categories 
+        if(tags){
+            tags = (tags as String).split(",");
+            // tags field is a array in mongoDb so we use $in operator to find all posts with tags
+            posts = await Posts.find({status:"published",$contains: {tags: {$in: tags} }})
+                .sort({ 'updatedAt': -1 })
+                .skip((pageNum - 1) * limitNum)
+                .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published",$contains: {tags: {$in: tags} }});
+        }    
+        // get all post by default
+        else{
+            posts = await Posts.find({status:"published"})
+            .sort({ 'updatedAt': -1 })
+            .skip((pageNum - 1) * limitNum)
+            .limit(limitNum).populate("user");
+            totalCount = await Posts.countDocuments({status:"published"});
+        }
+        return res
+            .status(200)
+            .json({
+                status: 200,
+                message: "Posts fetched successfully",
+                totalCount,
+                data: posts,
+            });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: 500, error });
+    }
+};
+/** get trending Posts - end */
