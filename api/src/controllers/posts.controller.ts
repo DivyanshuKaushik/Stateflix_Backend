@@ -132,6 +132,7 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 export const getPosts = async (req: Request, res: Response) => {
     try {
         let { categories, publishers, page, limit, tags } = req.query;
+        console.log(req.query)
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let totalCount;
@@ -182,6 +183,7 @@ export const getPosts = async (req: Request, res: Response) => {
                 status: "published",
                 tags: { $in: tags },
             });
+            console.log(posts);
         }
         // get all post by default
         else {
@@ -214,6 +216,31 @@ export const getPost = async (req: Request, res: Response) => {
             status: 200,
             message: "Post fetched successfully",
             data: post,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: 500, error });
+    }
+};
+/** get single published Posts */
+export const getPostsByTags = async (req: Request, res: Response) => {
+    try {
+        let { tags,page,limit } = req.query;
+        const pageNum = parseInt(page as string);
+        const limitNum = parseInt(limit as string);
+        tags = (tags as String).split(",");
+        const  posts = await Posts.find({
+            status: "published",
+            tags: { $in: tags },
+        })
+            .sort({ updatedAt: -1 })
+            .skip((pageNum - 1) * limitNum)
+            .limit(limitNum)
+        console.log(tags,posts)
+        return res.status(200).json({
+            status: 200,
+            message: "Post fetched successfully",
+            data: posts,
         });
     } catch (error) {
         console.error(error);

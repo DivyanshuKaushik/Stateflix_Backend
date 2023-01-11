@@ -5,6 +5,7 @@ import {
     deletePost,
     getPost,
     getPosts,
+    getPostsByTags,
     getTrendingPosts,
     getUnpublishedPosts,
     getUserPosts,
@@ -100,6 +101,9 @@ router.get("/posts", getPosts);
 /** get trending posts */
 // GET /api/v1/posts/trending | /api/v1/posts/trending?page=?&limit=?  @access Public
 router.get("/posts/trending", getTrendingPosts);
+
+/** get trending posts by tags */
+router.get("/posts/tags",getPostsByTags)
 
 // GET /api/v1/getArticle @access Public
 router.get("/posts/:id", checkSchema(idValidator), validateRequest, getPost);
