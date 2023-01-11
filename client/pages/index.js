@@ -3,8 +3,18 @@ import Basic from "../components/layouts/Basic";
 import News from "../components/News";
 import API from "../services/API";
 import MainWrapper from "../components/layouts/MainWrapper";
+import { useSelector } from "react-redux";
+import { selectVisitor } from "../app/features/authSlice";
 
 export default function Home({news,ads}) {
+  // const visitor = useSelector(selectVisitor)
+  // console.log("visitor",visitor);
+  // const googleLogin = () => {
+  //   window.open(
+	// 		`${process.env.STATEFLIX_API_URI}/auth/google/callback`,
+	// 		"_self"
+	// 	);
+  // }
     return (
         <>
             <Head>
@@ -16,6 +26,8 @@ export default function Home({news,ads}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
           <Basic>
+          {/* <button onClick={googleLogin}>google</button>
+          {visitor && <div>{visitor.name}</div>} */}
           <MainWrapper ads={ads}>
               <News news={news} />
           </MainWrapper>

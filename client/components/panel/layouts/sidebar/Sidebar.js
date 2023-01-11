@@ -19,7 +19,7 @@ import LogoIcon from "../logo/LogoIcon";
 import Menuitems from "./MenuItems";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../../app/features/userSlice";
+import { selectUser } from "../../../../app/features/authSlice";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
     const user = useSelector(selectUser);

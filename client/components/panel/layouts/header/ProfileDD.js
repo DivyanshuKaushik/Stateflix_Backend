@@ -14,7 +14,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../../app/features/userSlice";
+import { selectUser } from "../../../../app/features/authSlice";
 import Cookies from "js-cookie";
 
 const ProfileDD = () => {

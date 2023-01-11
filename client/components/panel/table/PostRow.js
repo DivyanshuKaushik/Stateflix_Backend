@@ -12,7 +12,7 @@ import FeatherIcon from "feather-icons-react";
 import Modal from "../../utils/Modal";
 import NewsCard from "../../cards/NewsCard";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../../app/features/userSlice";
+import { selectUser } from "../../../app/features/authSlice";
 import { useRouter } from "next/router";
 import { setChange } from "../../../app/features/changeSlice";
 import API from "../../../services/API";

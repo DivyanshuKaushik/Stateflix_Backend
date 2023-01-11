@@ -6,7 +6,7 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { RiShareForwardLine } from "react-icons/ri";
 import HTMLRenderer from "react-html-renderer";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../app/features/userSlice";
+import { selectUser } from "../../app/features/authSlice";
 import { useRouter } from "next/router";
 import {relativeTime} from "../utils/time";
 const PollCard = ({ poll ,options=true}) => {

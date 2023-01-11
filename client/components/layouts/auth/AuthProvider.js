@@ -5,8 +5,8 @@ import {
     selectUser,
     setIsLoading,
     setUser,
-} from "../../app/features/userSlice";
-import API from "../../services/API";
+} from "../../../app/features/authSlice";
+import API from "../../../services/API";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
@@ -20,14 +20,14 @@ const AuthProvider = ({ children }) => {
         async function getUser() {
             try{
                 dispatch(setIsLoading(true));
-                const token = Cookies.get("accessToken");
-                if(token){
-                    const data = (await API.get('/getAuthenticatedUser',{headers:{Authorization:token}})).data.data
+                // const token = Cookies.get("accessToken");
+                // if(token){
+                    const data = (await API.get('/getAuthenticatedUser')).data.data
                     if (data) {
-                        console.log(data);
-                        dispatch(setUser({...data,token}));
+                        console.log("user",data);
+                        dispatch(setUser(data));
                     }
-                }
+                // }
                 dispatch(setIsLoading(false));
             }catch(error){
                 // console.warn(error)

@@ -59,19 +59,22 @@ export const login = async (req: Request, res: Response) => {
         // generate auth token
         const token = await existingUser.generateAuthToken();
         // send accessToken in cookies
-        // res.cookie("accessToken", token, { httpOnly: true ,expires: new Date(new Date().getTime()+ 1000 * 60 * 60 * 24 * 10) ,secure: true, sameSite: 'none' });
-        return res.status(200).json({
-            status: 200,
-            message: "User logged in successfully",
-            data: {
-                id: existingUser._id,
-                name: existingUser.name,
-                email: existingUser.email,
-                phone: existingUser.phone,
-                role: existingUser.role,
-                token,
-            },
-        });
+        res.cookie("accessToken", token, {expires: new Date(new Date().getTime()+ 1000 * 60 * 60 * 24 * 10)});
+        // res.cookie("accessToken", token, { httpOnly: true ,expires: new Date(new Date().getTime()+ 1000 * 60 * 60 * 24 * 10) ,secure: false, sameSite: 'none' });
+        return res
+            .status(200)
+            .json({
+                status: 200,
+                message: "User logged in successfully",
+                data: {
+                    id: existingUser._id,
+                    name: existingUser.name,
+                    email: existingUser.email,
+                    phone: existingUser.phone,
+                    role: existingUser.role,
+                    token,
+                },
+            });
     } catch (error) {
         res.status(500).json({ status: 500, error });
     }
@@ -171,4 +174,3 @@ export const changePassword = async (req: CustomRequest, res: Response) => {
     }
 };
 /** updated password - end */
-

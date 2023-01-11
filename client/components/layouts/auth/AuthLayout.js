@@ -5,8 +5,8 @@ import {
     selectUser,
     setIsLoading,
     setUser,
-} from "../../app/features/userSlice";
-import API from "../../services/API";
+} from "../../../app/features/authSlice";
+import API from "../../../services/API";
 import { useRouter } from "next/router";
 
 const AuthLayout = ({ children }) => {

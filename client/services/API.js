@@ -23,7 +23,10 @@ const API = axios.create({
     headers:{
         "Content-Type": "application/json",
         "x-api-key":process.env.STATEFLIX_API_KEY,
-        "Authorization":Cookies.get("accessToken")
+        // "Authorization":Cookies.get("accessToken"),
+        "Access-Control-Allow-Credentials":true,
     },
 });
+
+API.defaults.withCredentials = true;
 export default API;
