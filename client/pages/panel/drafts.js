@@ -3,7 +3,7 @@ import { Grid, Stack, Button } from "@mui/material";
 import TableBase from "../../components/panel/table/TableBase";
 import PostRow from "../../components/panel/table/PostRow";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../app/features/userSlice";
+import { selectUser } from "../../app/features/authSlice";
 import API from "../../services/API";
 
 const post_columns = ["title", "category", "status", "actions"];

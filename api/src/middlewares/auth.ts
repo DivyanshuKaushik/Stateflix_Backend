@@ -13,7 +13,7 @@ interface JwtPayload {
 }
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const token = req.headers.authorization
+        const token = req.cookies.accessToken || req.headers.authorization
         if(!token) return res.status(401).json({message: 'No token provided'})
         const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as JwtPayload
         if(decoded.role !== "admin") return res.status(401).json({message: 'Unauthorized'})
@@ -27,7 +27,7 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
 }
 export const isEditor = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const token = req.headers.authorization
+        const token = req.cookies.accessToken || req.headers.authorization
         if(!token) return res.status(401).json({message: 'No token provided'})
         const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as JwtPayload
         if(!(decoded.role === "admin" || decoded.role === "editor")) return res.status(401).json({message: 'Unauthorized'})
@@ -41,7 +41,7 @@ export const isEditor = async (req: Request, res: Response, next: NextFunction) 
 }
 export const isReporter = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const token = req.headers.authorization
+        const token = req.cookies.accessToken || req.headers.authorization
         if(!token) return res.status(401).json({message: 'No token provided'})
         const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as JwtPayload
         if(!(decoded.role === "admin" || decoded.role === "reporter" || decoded.role==="editor")) return res.status(401).json({message: 'Unauthorized'})
@@ -56,7 +56,7 @@ export const isReporter = async (req: Request, res: Response, next: NextFunction
 
 export const verifyToken = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try{
-        const token = req.headers.authorization
+        const token = req.cookies.accessToken || req.headers.authorization
         if(!token) return res.status(401).json({message: 'No token provided'})
         const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as JwtPayload
         if(!decoded) return res.status(401).json({message: 'Unauthorized'})

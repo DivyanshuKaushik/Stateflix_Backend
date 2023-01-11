@@ -20,11 +20,10 @@ const Login = () => {
     const login = async (e) => {
         e.preventDefault();
         try{
-            console.log(credentials)
             const data = (await API.post("/auth/login", credentials)).data.data;
             // save jwt accessToken to cookie 
             // setUser({...data.user, accessToken: data.token});
-            Cookie.set("accessToken", data.token, {expires: 10});
+            // Cookie.set("accessToken", data.token, {expires: 10});
             router.push("/panel");
             // localStorage.setItem("user", JSON.stringify({...data.user,accessToken:data.token}));
             // localStorage.setItem("accessToken", JSON.stringify(data.token));

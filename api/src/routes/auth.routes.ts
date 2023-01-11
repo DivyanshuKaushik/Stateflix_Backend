@@ -1,8 +1,9 @@
-import { Router } from "express";
+import { Router,Request,Response } from "express";
 import { check } from "express-validator";
+import passport from "../passport";
 import { changePassword, deleteUser, getAllUsers, getAuthenticatedUser, login, register } from "../controllers/auth.controller";
 import { isAdmin, verifyToken } from "../middlewares/auth";
-import upload from "../middlewares/upload";
+
 const router: Router = Router();
 
 /***** user registration - starts *****/
@@ -54,5 +55,47 @@ router.delete("/users/:id", isAdmin, deleteUser);
 
 // PATCH /users/changePassword @access Private 
 router.patch("/users/changePassword",verifyToken, changePassword);
+
+
+/** google login for visitors - start */
+router.get("/auth/google/login/success", (req, res) => {
+	if (req.user) {
+		res.status(200).json({
+			error: false,
+			message: "Successfully Loged In",
+			data: req.user,
+		});
+	} else {
+		res.status(403).json({ error: true, message: "Not Authorized" });
+	}
+});
+
+router.get("/auth/google/login/failed", (req, res) => {
+	res.status(401).json({
+		error: true,
+		message: "Log in failure",
+	});
+});
+
+const scopes : string[] = ["profile", "email"]
+
+router.get("/auth/google", passport.authenticate("google", { scope: scopes,session: true }));
+
+router.get(
+	"/auth/google/callback",
+	passport.authenticate("google", {
+		successRedirect: process.env.STATEFLIX_CLIENT_URI,
+		failureRedirect: "/auth/google/login/failed",
+        session: true
+	})
+);
+
+router.get("/auth/google/logout",async (req:Request, res:Response) => {
+	req.logout((err:any) => console.error(err));
+    // req.session.destroy((err)=>err)
+    res.json({message:"logged out"})
+	// res.redirect(process.env.STATEFLIX_CLIENT_URI as string);
+});
+/** google login for visitors - end */
 
 export default router;

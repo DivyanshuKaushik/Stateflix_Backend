@@ -11,10 +11,10 @@ import PropTypes from "prop-types";
 import createEmotionCache from "../components/panel/createEmotionCache";
 import MuiThemeProvider from "../components/panel/theme/MuiThemeProvider";
 import FullLayout from "../components/panel/layouts/FullLayout";
-import AuthProvider from "../components/layouts/AuthProvider";
-import AuthLayout from "../components/layouts/AuthLayout";
+import AuthProvider from "../components/layouts/auth/AuthProvider";
 import InitialStateProvider from "../components/InitialStateProvider";
 import Head from "next/head";
+import VisitorProvider from "../components/layouts/auth/VisitorProvider";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -85,7 +85,9 @@ function MyApp({
                             {getLayout ? (
                                 getLayout(<Component {...pageProps} />)
                             ) : (
-                                <Component {...pageProps} />
+                                <VisitorProvider>
+                                    <Component {...pageProps} />
+                                </VisitorProvider>
                             )}
                         </InitialStateProvider>
                     </ThemeProvider>
