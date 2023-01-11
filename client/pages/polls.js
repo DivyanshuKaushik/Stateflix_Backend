@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectUser } from "../app/features/userSlice";
+import { selectUser } from "../app/features/authSlice";
 import Ads from "../components/Ads";
 import PollCard from "../components/cards/PollCard";
 import Basic from "../components/layouts/Basic";
