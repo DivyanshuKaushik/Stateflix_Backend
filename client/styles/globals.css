@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+    
+}
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+@layer components {
+  .poll_li{
+      @apply w-full bg-gray-100 py-2 px-4 rounded-md cursor-pointer hover:bg-blue-200 h-20 flex items-center;
+  }
+  .poll_li_h3{
+      @apply ml-3 text-lg ;
+  }
+  .news_card_option_btn{
+      @apply flex items-center text-xs lg:text-sm outline-none border-none space-x-2 hover:text-blue-400 p-2 rounded-xl;
+  }
+}
