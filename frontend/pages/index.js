@@ -5,6 +5,7 @@ import API from "../services/API";
 import MainWrapper from "../components/layouts/MainWrapper";
 import { useSelector } from "react-redux";
 import { selectVisitor } from "../app/features/authSlice";
+import axios from "axios";
 
 export default function Home({news,ads}) {
   // const visitor = useSelector(selectVisitor)
@@ -38,8 +39,8 @@ export default function Home({news,ads}) {
 
 export async function getServerSideProps(context) {
   try {
-    const news= (await API.get("/posts")).data.data;
-    const ads = (await API.get("/ads")).data.data;
+    const news= (await axios.get("/backend/api/v1/posts")).data.data;
+    const ads = (await axios.get("/backend/api/v1/ads")).data.data;
     return {
       props: {
         news,ads
