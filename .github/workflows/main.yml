@@ -1,7 +1,7 @@
 name: Deploy Stateflix app to AWS Elastic Beanstalk
 
 on:
-  push:
+  pull_request:
     branches:
       - main
     types:
