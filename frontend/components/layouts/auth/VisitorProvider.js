@@ -20,6 +20,7 @@ const VisitorProvider = ({ children }) => {
             try{
                 dispatch(setIsLoading(true));
                 const data = (await API.get('/auth/google/login/success',{withCredentials:true})).data.data
+                console.log("visitor",  data);
                 if (data) {
                     dispatch(setVisitor(data));
                 }
