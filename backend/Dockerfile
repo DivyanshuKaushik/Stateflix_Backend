@@ -21,6 +21,7 @@ COPY --from=builder /app/dist ./
 RUN yarn install --only=production
 EXPOSE 4000
 CMD ["app.js"]
+
 # COPY package*.json ./
 # COPY --from=builder /app/dist ./
 # RUN npm install --only=production
