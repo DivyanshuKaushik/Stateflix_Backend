@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 services:
     nginx:
         image: divyanshukaushik/stateflix-nginx:latest
@@ -8,13 +8,26 @@ services:
             - backend
         ports:
             - "80:80"
+        networks:
+            - stateflix
 
     frontend:
         image: divyanshukaushik/stateflix-frontend:latest
         env_file:
-          - ./frontend/.env.local
+            - ./frontend/.env.local
+        networks:
+            - stateflix
 
     backend:
         image: divyanshukaushik/stateflix-backend:latest
         env_file:
-          - ./backend/.env
+            - ./backend/.env
+        networks:
+            - stateflix
+    
+networks:
+    stateflix:
+        driver: bridge
+
+
+
