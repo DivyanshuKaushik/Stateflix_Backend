@@ -15,9 +15,20 @@ services:
         build: ./frontend
         env_file:
           - ./frontend/.env.local
+        ports:
+            - "3000:3000"
+        networks:
+            - stateflix
 
     backend:
         # image: divyanshukaushik/stateflix-backend:latest
         build: ./backend
         env_file:
           - ./backend/.env
+        ports:
+            - "4000:4000"
+        networks:
+            - stateflix
+networks:
+    stateflix:
+        driver: bridge
