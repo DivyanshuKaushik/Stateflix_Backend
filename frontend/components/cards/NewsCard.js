@@ -19,6 +19,7 @@ import {
 } from "next-share";
 import Link from "next/link";
 import slugify from "slugify";
+import PublisherHead from "./PublisherHead";
 
 const NewsCard = ({ news, options = true, followBtn = true }) => {
     const [follow, setFollow] = React.useState(false);
@@ -27,48 +28,7 @@ const NewsCard = ({ news, options = true, followBtn = true }) => {
         news && (
             <div className="border-2 rounded-2xl p-4 shadow-sm bg-gray-50 dark:bg-[#202020] dark:text-gray-100">
                 {/* header  */}
-                <header className="flex space-x-2 items-center justify-between">
-                    <div className="flex space-x-2 items-center">
-                        <div className="relative h-7 w-7 lg:h-10 lg:w-10 bg-blue-100 rounded-full">
-                            <Image
-                                src="/ICON.png"
-                                layout="fill"
-                                className="object-contain rounded-full"
-                                alt="logo"
-                            />
-                        </div>
-                        <div className="">
-                            <div className="flex items-center space-x-1.5">
-                                <h1 className="font-semibold text-sm capitalize">
-                                    {news.publisher.split("-").join(" ")}
-                                </h1>
-                                <MdVerified className="text-blue-500 text-lg" />
-                            </div>
-                            <p className="text-xs text-gray-500 dark:text-gray-100">
-                                {relativeTime(news.updatedAt)}
-                            </p>
-                        </div>
-                    </div>
-                    {followBtn && (
-                        <div className="">
-                            {follow ? (
-                                <button
-                                    className="text-green-500 flex"
-                                    onClick={() => setFollow(!follow)}
-                                >
-                                    Following
-                                </button>
-                            ) : (
-                                <button
-                                    className="text-blue-500 flex"
-                                    onClick={() => setFollow(!follow)}
-                                >
-                                    <HiPlus size={20} /> Follow
-                                </button>
-                            )}
-                        </div>
-                    )}
-                </header>
+                <PublisherHead publisher={news.publisher} time={news.updatedAt} followBtn={followBtn} />
                 {/* body  */}
                 <div className="mt-3">
                     {/* title  */}

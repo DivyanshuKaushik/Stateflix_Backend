@@ -39,8 +39,8 @@ export default function Home({news,ads}) {
 
 export async function getServerSideProps(context) {
   try {
-    const news= (await axios.get("/backend/api/v1/posts")).data.data;
-    const ads = (await axios.get("/backend/api/v1/ads")).data.data;
+    const news= (await API.get("/posts")).data.data;
+    const ads = (await API.get("/ads")).data.data;
     return {
       props: {
         news,ads

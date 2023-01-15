@@ -2,7 +2,7 @@ import { Router,Request,Response } from "express";
 import { check } from "express-validator";
 import passport from "../passport";
 import { changePassword, deleteUser, getAllUsers, getAuthenticatedUser, login, register } from "../controllers/auth.controller";
-import { isAdmin, verifyToken } from "../middlewares/auth";
+import { CustomRequest, isAdmin, verifyToken } from "../middlewares/auth";
 
 const router: Router = Router();
 
@@ -58,8 +58,10 @@ router.patch("/users/changePassword",verifyToken, changePassword);
 
 
 /** google login for visitors - start */
-router.get("/auth/google/login/success", (req, res) => {
+router.get("/auth/google/login/success", (req:CustomRequest, res) => {
 	if (req.user) {
+        res.cookie("visitorAccessToken",req.user.token,{expires: new Date(new Date().getTime()+ 1000 * 60 * 60 * 24 * 10)}),
+        delete req.user.token
 		res.status(200).json({
 			error: false,
 			message: "Successfully Loged In",

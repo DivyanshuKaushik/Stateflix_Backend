@@ -13,7 +13,7 @@ const GoogleStrategy = new Strategy(
     },
     async function (accessToken:any, refreshToken:any, profile:any, callback:any) {
         try{
-            const visitor = await Visitors.findOne({provider_id:profile.id,provider:profile.provider})
+            const visitor = await Visitors.findOne({provider_id:profile.id,provider:profile.provider}).populate("following")
             console.log(visitor)
             if(!visitor){
                 const newVisitor = new Visitors({
@@ -24,8 +24,12 @@ const GoogleStrategy = new Strategy(
                     picture:profile._json.picture,
                 })
                 await newVisitor.save()
+                const token = await newVisitor.generateAuthToken();
+                newVisitor.token = token as string;
                 callback(null,newVisitor)
             }else{
+                const token = await visitor.generateAuthToken();
+                visitor.token = token as string;
                 callback(null, visitor);
 
             }
@@ -41,8 +45,12 @@ passport.serializeUser((user, done) => {
     done(null, user);
 });
 passport.deserializeUser(async function (user: IVisitor, done) {
-    const visitor = await Visitors.findById(user._id);
-    done(null, visitor);
+    const visitor = await Visitors.findById(user._id).populate("following");
+    const token = await visitor?.generateAuthToken();
+    if(visitor){
+        visitor.token = token as string;
+    }
+    done(null,visitor);
 });
 // passport.use(,
 //   function(request:Request, accessToken:any, refreshToken:any, profile:any, done:any) {
