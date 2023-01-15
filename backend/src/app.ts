@@ -19,6 +19,7 @@ import pollRoutes from './routes/polls.routes'
 import publisherRoutes from './routes/publisher.routes'
 import adsRoutes from './routes/ads.routes'
 import trendingRoutes from './routes/trending.routes'
+import visitorRoutes from './routes/visitor.routes'
 // import { genAPIKey } from './utils'
 
 /**  express app initialization */
@@ -56,15 +57,15 @@ app.use(cors(corsOptions))
 
 /** default headers */
 
-app.use((req: Request,res: Response,next: NextFunction)=>{
-    // console.log(req.cookies,req.session)
-    // res.setHeader('Access-Control-Allow-Origin','*')
-    // res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE')
-    // res.setHeader('Access-Control-Allow-Headers','Set-Cookie,Content-Type,Authorization,Accept-Encoding,accecpt,origin, x-requested-with, access-control-allow-credentials, cookie, access-control-allow-origin')
-    // res.setHeader('Access-Control-Allow-Credentials', 'true')
-    // res.cookie("hello","world")
-    next()
-})
+// app.use((req: Request,res: Response,next: NextFunction)=>{
+//     // console.log(req.cookies,req.session)
+//     // res.setHeader('Access-Control-Allow-Origin','*')
+//     // res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE')
+//     // res.setHeader('Access-Control-Allow-Headers','Set-Cookie,Content-Type,Authorization,Accept-Encoding,accecpt,origin, x-requested-with, access-control-allow-credentials, cookie, access-control-allow-origin')
+//     // res.setHeader('Access-Control-Allow-Credentials', 'true')
+//     // res.cookie("hello","world")
+//     next()
+// })
 
 /**  passport google auth setup */
 // app.set("trust proxy", 1);
@@ -125,6 +126,7 @@ app.use('/api/v1',pollRoutes)
 app.use('/api/v1',publisherRoutes)
 app.use('/api/v1',adsRoutes)
 app.use('/api/v1',trendingRoutes)
+app.use('/api/v1/visitor',visitorRoutes)
 /**** all routes - end *****/
 
 /**  error handling - start */

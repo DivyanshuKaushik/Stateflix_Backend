@@ -10,7 +10,6 @@ interface IPoll extends Document {
     expiryInDays: number;
     publisher:Types.ObjectId;
 }
-
 const PollSchema: Schema = new Schema({
     title: {
         type: String,

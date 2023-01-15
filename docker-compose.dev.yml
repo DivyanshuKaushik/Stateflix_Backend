@@ -1,7 +1,8 @@
 version: "3.8"
 services:
     nginx:
-        image: divyanshukaushik/stateflix-nginx:latest
+        # image: divyanshukaushik/stateflix-nginx:latest
+        build: ./nginx
         restart: always
         depends_on:
             - frontend
@@ -10,11 +11,13 @@ services:
             - "80:80"
 
     frontend:
-        image: divyanshukaushik/stateflix-frontend:latest
+        # image: divyanshukaushik/stateflix-frontend:latest
+        build: ./frontend
         env_file:
           - ./frontend/.env.local
 
     backend:
-        image: divyanshukaushik/stateflix-backend:latest
+        # image: divyanshukaushik/stateflix-backend:latest
+        build: ./backend
         env_file:
           - ./backend/.env
