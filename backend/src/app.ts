@@ -68,7 +68,6 @@ app.use(cors(corsOptions))
 // })
 
 /**  passport google auth setup */
-// app.set("trust proxy", 1);
 const mongoStore = MongoDBStore(session);
 
 const store = new mongoStore({
@@ -88,7 +87,9 @@ app.use(
     //   secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
     }
-  }))
+}))
+app.set("trust proxy", 1);
+// app.enable("trust proxy");
 app.use(passport.initialize());
 app.use(passport.session());
 /**  passport google auth setup end */
