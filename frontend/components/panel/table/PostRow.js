@@ -82,6 +82,7 @@ const PostRow = () => {
             ).data;
             dispatch(setChange("posts"))
             alert(res.message);
+            setEdit(false)
         } catch (err) {
             console.error(err);
         }

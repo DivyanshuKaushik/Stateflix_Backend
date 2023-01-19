@@ -38,7 +38,6 @@ export default NewsByPublisher;
 export async function getServerSideProps(context) {
     try {
         const { publisher } = context.params;
-        console.log(publisher);
         const res = (await API.get(`/posts?publishers=${publisher}`)).data;
         const pub_data = (await API.get(`/publisher/${publisher}`)).data.data;
         return {

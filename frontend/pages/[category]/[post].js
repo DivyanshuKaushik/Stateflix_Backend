@@ -36,9 +36,7 @@ export default Post;
 export async function getServerSideProps(context) {
     try {
         const { post } = context.params;
-        console.log(context.params);
         const id = post.split("-").pop();
-        console.log(id);
         const news = (await API.get(`/posts/${id}`)).data.data;
         return {
             props: {

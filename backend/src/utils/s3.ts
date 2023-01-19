@@ -35,6 +35,7 @@ export const uploadImage = (image: Buffer, name: string) => {
             // return url of uploaded image
             return resolve(upload.Location);
         } catch (error) {
+            console.log(error)
             return reject((error));
         }
     });

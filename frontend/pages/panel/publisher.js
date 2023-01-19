@@ -49,7 +49,6 @@ const Publisher = () => {
         }
         // console.log(publisherData);
         const res = (await API.post("/publisher", publisherData)).data;
-        console.log(res);
         setPublisherData({ name: "", image: "" });
         alert(res.message);
         dispatch(setChange("publisher"))

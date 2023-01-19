@@ -67,7 +67,7 @@ const PostForm = ({ postData, setPostData, handleSubmit, edit = false }) => {
                                 />
                             ) : (
                                 <Image
-                                    src={URL.createObjectURL(option.image)}
+                                    src={URL.createObjectURL(postData.image)}
                                     alt="image"
                                     width={100}
                                     height={100}
