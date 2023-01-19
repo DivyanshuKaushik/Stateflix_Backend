@@ -24,7 +24,6 @@ const AuthProvider = ({ children }) => {
                 // if(token){
                     const data = (await API.get('/getAuthenticatedUser')).data.data
                     if (data) {
-                        console.log("user",data);
                         dispatch(setUser(data));
                     }
                 // }

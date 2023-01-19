@@ -45,12 +45,11 @@ const Posts = () => {
 
     const createNewPost = async (e) => {
         e.preventDefault();
-        console.log(postData);
         const formData = new FormData();
         formData.append("title", postData.title);
         formData.append("content", postData.content);
         formData.append("image", postData.image);
-        formData.append("tags", postData.tags);
+        formData.append("tags", JSON.stringify(postData.tags));
         formData.append("category", postData.category);
         formData.append("publisher", postData.publisher);
         formData.append("source", postData.source);
@@ -61,7 +60,6 @@ const Posts = () => {
                     headers: { "Content-Type": "multipart/formdata" },
                 })
             ).data;
-            console.log(data);
             alert(data.message);
             setAddPost(false);
             setPostData({

@@ -9,7 +9,7 @@ import BaseCard from "../../components/panel/components/baseCard/BaseCard";
 import ImageInput from "../../components/utils/ImageInput";
 import API from "../../services/API";
 
-const cat_columns = ["name", "hindiName", "image"];
+const cat_columns = ["name", "hindiName", "image","actions"];
 
 const Categories = () => {
     const categories = useSelector(selectCategories);
@@ -33,18 +33,23 @@ const Categories = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("name", categoryData.name);
-        formData.append("hindiName", categoryData.hindiName);
-        formData.append("image", categoryData.image);
-        const res = (
-            await API.post("/categories", formData, {
-                headers: { "Content-Type": "multipart/formdata" },
-            })
-        ).data;
-        console.log(res);
-        setCategoryData({ name: "", image: "", hindiName: "" });
-        alert(res.message);
+        try{
+            const formData = new FormData();
+            formData.append("name", categoryData.name);
+            formData.append("hindiName", categoryData.hindiName);
+            formData.append("image", categoryData.image);
+            const res = (
+                await API.post("/categories", formData, {
+                    headers: { "Content-Type": "multipart/formdata" },
+                })
+            ).data;
+            setCategoryData({ name: "", image: "", hindiName: "" });
+            alert(res.message);
+
+        }
+        catch(_){
+
+        }
     };
     return (
         <Grid container spacing={0}>

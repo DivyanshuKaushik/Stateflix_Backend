@@ -23,7 +23,6 @@ const Polls = () => {
     async function fetchPolls() {
         try {
             const data = (await API.get("/polls")).data.data;
-            console.log(data);
             setPolls(data);
         } catch (err) {
             console.log(err);
@@ -93,7 +92,6 @@ const Polls = () => {
             return alert("Please fill all the fields");
         }
         e.preventDefault();
-        console.log(pollData);
         const formData = new FormData();
         formData.append("title", pollData.title);
         formData.append("expiryInDays", pollData.expiryInDays);
@@ -107,7 +105,7 @@ const Polls = () => {
         const res = (await API.post("/polls", formData,{headers:{
             'Content-Type': 'multipart/form-data'
         }})).data;
-        console.log(res);
+        dispatch(setChange("polls"))
         alert(res.message);
         // setAddPoll(false);
         // dispatch(setChange("polls"));

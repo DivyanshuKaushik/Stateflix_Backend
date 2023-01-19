@@ -14,7 +14,6 @@ const InitialStateProvider = ({children}) => {
         try {
             setLoading(true)
             const categories = (await API.get("/categories")).data.data
-            console.log("cat",categories);
             dispatch(setCategories(categories))
             const publisher =  (await API.get("/publisher")).data.data
             dispatch(setPublisher(publisher))
