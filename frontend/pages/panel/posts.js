@@ -34,6 +34,7 @@ const Posts = () => {
     const [addPost, setAddPost] = useState(false);
     const [postData, setPostData] = useState({
         title: "",
+        slug:"",
         content: "",
         image: "",
         tags: [],
@@ -47,6 +48,7 @@ const Posts = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("title", postData.title);
+        formData.append("slug", postData.slug);
         formData.append("content", postData.content);
         formData.append("image", postData.image);
         formData.append("tags", JSON.stringify(postData.tags));

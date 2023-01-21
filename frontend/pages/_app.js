@@ -49,7 +49,13 @@ function MyApp({
         <Provider store={store}>
             <CacheProvider value={emotionCache}>
                 <Head>
-                    <title>Stateflix</title>
+                    <title>STATELFIX</title>
+                    <meta name="viewport" content="initial-scale=1, width=device-width" />
+                    <meta name="viewport" content="user-scalable=no" />
+                    <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+                    />
                     <meta
                         name="description"
                         content="Stateflix is a news aggregator that provides you with the latest news from all over the world."

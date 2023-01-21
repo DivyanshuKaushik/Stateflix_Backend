@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Drawer as MuiDrawer, Box } from "@mui/material";
 
-export default function Drawer({ children, type, state, setState, width }) {
+export default function Drawer({ children, type, state, setState, width,styles }) {
     const toggleDrawer = (open) => (event) => {
         if (
             event.type === "keydown" &&
@@ -20,7 +20,8 @@ export default function Drawer({ children, type, state, setState, width }) {
             onClose={toggleDrawer(false)}
             PaperProps={{
                 sx: {
-                    width,px:1
+                    width,px:1,
+                    ...styles
                 },
             }}
         >

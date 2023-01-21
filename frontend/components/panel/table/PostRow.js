@@ -34,6 +34,7 @@ const PostRow = () => {
 
     const [postData, setPostData] = useState({
         title: "",
+        slug:"",
         content: "",
         image: "",
         tags: [],
@@ -70,6 +71,7 @@ const PostRow = () => {
             formData.append("image", postData.image);
             formData.append("id", postData._id);
             formData.append("title", postData.title);
+            formData.append("slug", postData.slug);
             formData.append("content", postData.content);
             formData.append("tags", JSON.stringify(postData.tags));
             formData.append("category", postData.category);

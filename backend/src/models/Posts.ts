@@ -2,6 +2,7 @@ import { Schema, model, Types } from "mongoose";
 
 export interface IPost extends Document {
     title: string;
+    slug: string;
     content: String;
     image: String;
     category: Types.ObjectId;
@@ -15,6 +16,10 @@ export interface IPost extends Document {
 const postSchema: Schema = new Schema(
     {
         title: {
+            type: String,
+            required: true,
+        },
+        slug: {
             type: String,
             required: true,
         },

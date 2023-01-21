@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
+import slugify from "slugify";
 import Category from "../models/Category";
 import Posts from "../models/Posts";
 import Trending from "../models/Trending.model";
@@ -15,11 +16,26 @@ export const createPost = async (req: Request, res: Response) => {
                 .json({ errors: [{ msg: "Please upload an image" }] });
         }
         // destructure all fields from body request
-        const { title, content, category, user, tags, source, publisher } =
-            req.body;
+        const {
+            title,
+            content,
+            category,
+            user,
+            tags,
+            source,
+            publisher,
+            slug,
+        } = req.body;
         // create new post
         const post = new Posts({
             title: title.trim(),
+            slug: slugify(slug, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+            }),
             content: content.trim(),
             category,
             tags: JSON.parse(tags),
@@ -55,7 +71,7 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
     try {
         // destructure all fields from body request
-        const { id, title, content, category, source, tags, publisher } =
+        const { id, title, content, category, source, tags, publisher, slug } =
             req.body;
         // check if image exists
         if (req.file) {
@@ -71,6 +87,13 @@ export const updatePost = async (req: Request, res: Response) => {
         // update Posts
         const updated = await Posts.findByIdAndUpdate(id, {
             title,
+            slug: slugify(slug, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+            }),
             content,
             category,
             source,
@@ -132,7 +155,7 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 export const getPosts = async (req: Request, res: Response) => {
     try {
         let { categories, publishers, page, limit, tags } = req.query;
-        console.log(req.query)
+        console.log(req.query);
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let totalCount;
@@ -146,8 +169,8 @@ export const getPosts = async (req: Request, res: Response) => {
             })
                 .sort({ updatedAt: -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum)
-                // .populate("user");
+                .limit(limitNum);
+            // .populate("user");
             totalCount = await Posts.countDocuments({
                 status: "published",
                 category: { $in: categories },
@@ -162,8 +185,8 @@ export const getPosts = async (req: Request, res: Response) => {
             })
                 .sort({ updatedAt: -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum)
-                // .populate("user");
+                .limit(limitNum);
+            // .populate("user");
             totalCount = await Posts.countDocuments({
                 status: "published",
                 publisher: { $in: publishers },
@@ -177,8 +200,8 @@ export const getPosts = async (req: Request, res: Response) => {
             })
                 .sort({ updatedAt: -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum)
-                // .populate("user");
+                .limit(limitNum);
+            // .populate("user");
             totalCount = await Posts.countDocuments({
                 status: "published",
                 tags: { $in: tags },
@@ -190,8 +213,8 @@ export const getPosts = async (req: Request, res: Response) => {
             posts = await Posts.find({ status: "published" })
                 .sort({ updatedAt: -1 })
                 .skip((pageNum - 1) * limitNum)
-                .limit(limitNum)
-                // .populate("user");
+                .limit(limitNum);
+            // .populate("user");
             totalCount = await Posts.countDocuments({ status: "published" });
         }
         return res.status(200).json({
@@ -225,18 +248,18 @@ export const getPost = async (req: Request, res: Response) => {
 /** get single published Posts */
 export const getPostsByTags = async (req: Request, res: Response) => {
     try {
-        let { tags,page,limit } = req.query;
+        let { tags, page, limit } = req.query;
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         tags = (tags as String).split(",");
-        const  posts = await Posts.find({
+        const posts = await Posts.find({
             status: "published",
             tags: { $in: tags },
         })
             .sort({ updatedAt: -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum)
-        console.log(tags,posts)
+            .limit(limitNum);
+        console.log(tags, posts);
         return res.status(200).json({
             status: 200,
             message: "Post fetched successfully",
@@ -323,8 +346,8 @@ export const getTrendingPosts = async (req: Request, res: Response) => {
         })
             .sort({ updatedAt: -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum)
-            // .populate("user");
+            .limit(limitNum);
+        // .populate("user");
         const totalCount = await Posts.countDocuments({
             status: "published",
             tags: { $in: tags },
