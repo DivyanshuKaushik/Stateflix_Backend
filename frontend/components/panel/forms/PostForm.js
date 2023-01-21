@@ -35,6 +35,15 @@ const PostForm = ({ postData, setPostData, handleSubmit, edit = false }) => {
                         value={postData.title}
                         onChange={handleChange}
                     />
+                    {/* slug  */}
+                    <TextField
+                        label="English Title"
+                        variant="outlined"
+                        placeholder="English Title of post"
+                        name="slug"
+                        value={postData.slug}
+                        onChange={handleChange}
+                    />
                     {/* content  */}
                     <TextField
                         label="Content"

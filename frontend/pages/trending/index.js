@@ -26,7 +26,6 @@ export default function Trending({ news, ads, tags }) {
                     name="description"
                     content="Trending news from Stateflix"
                 />
-                <link rel="icon" href="/favicon.ico" />
             </Head>
             <Basic>
                 <MainWrapper ads={ads}>

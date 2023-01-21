@@ -10,7 +10,6 @@ import API from '../../services/API';
 const PublisherHead = ({publisher,time,followBtn=false}) => {
     const publishers = useSelector(selectPublisher)
     const visitor = useSelector(selectVisitor)
-    console.log(publishers,visitor,publisher);
     const [follow, setFollow] = React.useState(false);
     const [pubId, setPubId] = React.useState();
 

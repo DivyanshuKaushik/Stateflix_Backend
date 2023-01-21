@@ -22,6 +22,18 @@ import trendingRoutes from './routes/trending.routes'
 import visitorRoutes from './routes/visitor.routes'
 // import { genAPIKey } from './utils'
 
+import slugify from "slugify"
+
+console.log(slugify("hello-world", {
+    replacement: '-',  // replace spaces with replacement character, defaults to `-`
+    remove: undefined, // remove characters that match regex, defaults to `undefined`
+    lower: true,      // convert to lower case, defaults to `false`
+    strict: false,     // strip special characters except replacement, defaults to `false`
+    locale: 'vi'       // language code of the locale to use
+    })
+)
+
+
 /**  express app initialization */
 const app: Application = express()
 

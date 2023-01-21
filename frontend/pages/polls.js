@@ -7,10 +7,11 @@ import PollCard from "../components/cards/PollCard";
 import Basic from "../components/layouts/Basic";
 import MainWrapper from "../components/layouts/MainWrapper";
 import API from "../services/API";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
+import Head from "next/head";
 const Polls = () => {
     const user = useSelector(selectUser);
-    const polls_changes = useSelector(state=>state.changes.polls)
+    const polls_changes = useSelector((state) => state.changes.polls);
     const [polls, setPolls] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -28,29 +29,42 @@ const Polls = () => {
         fetchPolls();
     }, [polls_changes]);
 
-    return ( !loading &&
-        <Basic>
-            <MainWrapper>
-                <div className="flex flex-col space-y-3">
-                    {polls?.map((poll, index) => (
-                        <div key={index}>
-                            <PollCard key={poll._id} pollData={poll} />
-                            {(index+1) % 3 === 0 && (
-                                <div className="" key={index}>
-                                    <h3 className="text-blue-500 text-center mb-2">
-                                        Promoted Content
-                                    </h3>
-                                    <div className="flex justify-around">
-                                        <Ads />
-                                        <Ads />
-                                    </div>
+    return (
+        !loading && (
+            <>
+                <Head>
+                    <title>Stateflix - Polls</title>
+                    <meta
+                        name="description"
+                        content="Stateflix is a news aggregator that provides you with the latest news from all over the world."
+                    />
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
+
+                <Basic>
+                    <MainWrapper>
+                        <div className="flex flex-col space-y-3">
+                            {polls?.map((poll, index) => (
+                                <div key={index}>
+                                    <PollCard key={poll._id} pollData={poll} />
+                                    {(index + 1) % 3 === 0 && (
+                                        <div className="" key={index}>
+                                            <h3 className="text-blue-500 text-center mb-2">
+                                                Promoted Content
+                                            </h3>
+                                            <div className="flex justify-around">
+                                                <Ads />
+                                                <Ads />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </MainWrapper>
-        </Basic>
+                    </MainWrapper>
+                </Basic>
+            </>
+        )
     );
 };
 

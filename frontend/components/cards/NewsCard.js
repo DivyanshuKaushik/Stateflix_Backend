@@ -11,39 +11,42 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { RiShareForwardLine } from "react-icons/ri";
 import HTMLRenderer from "react-html-renderer";
 import { relativeTime, formatTime } from "../utils/time";
-import {
-    FacebookIcon,
-    FacebookShareButton,
-    WhatsappShareButton,
-    WhatsappIcon,
-} from "next-share";
+
 import Link from "next/link";
 import slugify from "slugify";
 import PublisherHead from "./PublisherHead";
+import Share from "../utils/Share";
 
-const NewsCard = ({ news, options = true, followBtn = true }) => {
+const NewsCard = ({
+    news,
+    options = true,
+    followBtn = true,
+    source = false,
+}) => {
     const [follow, setFollow] = React.useState(false);
-    const slug = news && slugify(news.title) + "-" + news._id;
+    const slug = news && news.slug + "-" + news._id;
+    const [share,setShare]  = React.useState(false)
     return (
         news && (
-            <div className="border-2 rounded-2xl p-4 shadow-sm bg-gray-50 dark:bg-[#202020] dark:text-gray-100">
+            <div className="border-2 rounded-2xl p-4 shadow-sm bg-gray-50 dark:bg-[#222222] dark:text-gray-100 dark:border-gray-400">
                 {/* header  */}
-                <PublisherHead publisher={news.publisher} time={news.updatedAt} followBtn={followBtn} />
+                <PublisherHead
+                    publisher={news.publisher}
+                    time={news.updatedAt}
+                    followBtn={followBtn}
+                />
                 {/* body  */}
                 <div className="mt-3">
                     {/* title  */}
-                    <h1 className="lg:text-xl font-extrabold dark:opacity-90 dark:text-white">{news.title}</h1>
-                    {/* tags  */}
-                    {/* <div className="">
-                {news.yoast_head_json.schema["@graph"][0].keywords.map((tag) =>( <span>{tag}</span> ))}
-            </div> */}
+                    <h1 className="lg:text-xl font-extrabold dark:opacity-90 dark:text-white">
+                        {news.title}
+                    </h1>
                     <div className="flex space-x-2">
-                        {news.tags
-                            .map((tag) => (
-                                <p key={tag} className="text-blue-400 text-sm">
-                                    #{tag}
-                                </p>
-                            ))}
+                        {news.tags.map((tag) => (
+                            <p key={tag} className="text-blue-400 text-sm">
+                                #{tag}
+                            </p>
+                        ))}
                     </div>
                     {/* image  */}
                     <div className="relative h-[200px] lg:h-[400px] w-full mt-4 mb-2">
@@ -59,72 +62,51 @@ const NewsCard = ({ news, options = true, followBtn = true }) => {
                             </h3>
                         </div>
                     </div>
-                    {/* image src  */}
-                    {/* <p className="text-sm text-gray-400">
-                    Ronnie Hillman was a running back with the Denver Broncos.
-                    (Photo: Twitter/ @MrHillman2U)
-                </p> */}
                     {/* content  */}
                     <div className="text-xs lg:text-base ">
-                        <p className="my-4 text-justify text-gray-600 dark:opacity-90 dark:text-white">
+                        <p className="my-4 text-justify text-gray-600 dark:opacity-80 dark:text-white">
                             {news.content}
                         </p>
-                        {/* <HTMLRenderer
-                        html={news.content}
-                        components={{
-                            p: (props) => (
-                                <p
-                                    className="my-4 text-justify text-gray-600"
-                                    {...props}
-                                />
-                            ),
-                        }}
-                    /> */}
                     </div>
-                    {/* <p
-                    className="my-4 text-justify text-gray-600"
-                    style={{ fontWeight: 530 }}
-                >
-                    {news.content.rendered}
-                </p> */}
-                    <p className="text-xs text-gray-500 dark:text-gray-100 text-right">
+                    <div className="flex justify-between items-center">
+                        <Share news={news} />
+                    <p className="text-xs text-gray-500 dark:text-gray-100">
                         {formatTime(news.updatedAt)}
                     </p>
+                    </div>
                     {/* options  */}
                     {options && (
-                        <div className="flex justify-around items-center mt-2">
+                        <div className="flex justify-around items-center mt-2 relative">
                             <button className="news_card_option_btn">
-                                <HiOutlineHeart className="" />{" "}
+                                <HiOutlineHeart className="" />
                                 <span className="">Like</span>
                             </button>
-                            <button className="news_card_option_btn">
-                                <RiShareForwardLine className="text-lg" />{" "}
+                            {/* <button className="news_card_option_btn" onClick={()=>setShare(!share)}>
+                                <RiShareForwardLine className="text-lg" />
                                 <span className="">Share</span>
-                            </button>
-                            <Link href={`/${news.category}/${slug}`}>
+                            </button> */}
+                            {source ? (
+                                <Link href={news.source} target="_blank">
+                                    <button className="news_card_option_btn">
+                                        <BsBoxArrowUpRight className="" />
+                                        <span className=""> Source</span>
+                                    </button>
+                                </Link>
+                            ) : (
+                                <Link href={`/${news.category}/${slug}`}>
+                                    <button className="news_card_option_btn">
+                                        <BsBoxArrowUpRight className="" />
+                                        <span className="">Read More </span>
+                                    </button>
+                                </Link>
+                            )}
                             <button className="news_card_option_btn">
-                                <BsBoxArrowUpRight className="" />{" "}
-                                <span className="">Read More</span>
-                            </button>
-
-                            </Link>
-                            <button className="news_card_option_btn">
-                                <HiOutlineBookmark className="" />{" "}
+                                <HiOutlineBookmark className="" />
                                 <span className="">Save</span>
                             </button>
-                            {/* <button className="bg-blue-500 py-1 px-2 text-sm flex items-center text-white font-semibold rounded-full">
-                        <WhatsappShareButton
-                            url={"https://stortnews-web.vercel.com"}
-                            quote={
-                               news.title
-                            }
-                            hashtag={"#janjgir"}
-                            className="flex"
-                        >
-                            <WhatsappIcon size={32} round />
-                        </WhatsappShareButton>
-                        <span>Whatsapp</span>
-                    </button> */}
+                            {/* {share && <div className="absolute bottom-8">
+                                <Share news={news}/>
+                            </div> } */}
                         </div>
                     )}
                 </div>

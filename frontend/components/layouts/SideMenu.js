@@ -15,24 +15,24 @@ import { useRouter } from "next/router";
 
 const sideMenuItems = [
     { title: "Home", icon: <HiHome size={24} />, href: "/" },
-    {
-        title: "Latest",
-        icon: <BsFillLightningChargeFill size={24} />,
-        href: "/latest",
-    },
+    // {
+    //     title: "Latest",
+    //     icon: <BsFillLightningChargeFill size={24} />,
+    //     href: "/latest",
+    // },
     { title: "Trending", icon: <MdTrendingUp size={24} />, href: "/trending" },
     {
         title: "Polls",
         icon: <HiChartBar size={24} />,
         href: "/polls",
     },
-    { title: "Stories", icon: <MdWebStories size={24} />, href: "/stories" },
-    { title: "Publisher", icon: <HiGlobeAlt size={24} />, href: "/publishers" },
-    {
-        title: "Bookmarks",
-        icon: <HiOutlineBookmark size={24} />,
-        href: "/bookmarks",
-    },
+    // { title: "Stories", icon: <MdWebStories size={24} />, href: "/stories" },
+    // { title: "Publisher", icon: <HiGlobeAlt size={24} />, href: "/publishers" },
+    // {
+    //     title: "Bookmarks",
+    //     icon: <HiOutlineBookmark size={24} />,
+    //     href: "/bookmarks",
+    // },
 ];
 
 const SideMenu = () => {
@@ -40,14 +40,14 @@ const SideMenu = () => {
 
     const categories = useSelector(selectCategories);
     return (
-        <>
+        <div className="">
             <div className="pt-6 lg:pt-0">
                 {sideMenuItems.map((item, index) => (
                     <Link key={index} href={item.href}>
                         <div
                             className={`flex items-center cursor-pointer my-1 ${
                                 pathname == item.href &&
-                                "bg-gray-200 text-blue-500 font-semibold"
+                                "bg-gray-200 text-blue-500 dark:text-blue-500 font-semibold"
                             } hover:bg-gray-200 ${
                                 pathname !== item.href && "text-gray-700"
                             } hover:text-blue-500 hover:font-semibold dark:text-gray-50 rounded-xl py-3 px-6`}
@@ -89,7 +89,7 @@ const SideMenu = () => {
                     ))}
                 </ul>
             </aside>
-        </>
+        </div>
     );
 };
 
