@@ -6,7 +6,7 @@ export default function Drawer({ children, type, state, setState, width,styles }
         if (
             event.type === "keydown" &&
             (event.key === "Tab" || event.key === "Shift")
-        ) {
+        ){
             return;
         }
 
