@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
 import slugify from "slugify";
+import { getCache, setCache } from "../cache";
 import Category from "../models/Category";
 import Posts from "../models/Posts";
 import Trending from "../models/Trending.model";
@@ -155,72 +156,100 @@ export const updatePostStatus = async (req: Request, res: Response) => {
 export const getPosts = async (req: Request, res: Response) => {
     try {
         let { categories, publishers, page, limit, tags } = req.query;
-        console.log(req.query);
         const pageNum = parseInt(page as string);
         const limitNum = parseInt(limit as string);
         let totalCount;
         let posts;
         // get post by categories
         if (categories) {
-            categories = (categories as String).split(",");
-            posts = await Posts.find({
-                status: "published",
-                category: { $in: categories },
-            })
-                .sort({ updatedAt: -1 })
-                .skip((pageNum - 1) * limitNum)
-                .limit(limitNum);
-            // .populate("user");
-            totalCount = await Posts.countDocuments({
-                status: "published",
-                category: { $in: categories },
-            });
+            const cached = await getCache(categories as string)
+            if(cached){
+                posts = JSON.parse(cached as string)
+            }else{
+                const cacheKey = categories as string
+                categories = (categories as String).split(",");
+                posts = await Posts.find({
+                    status: "published",
+                    category: { $in: categories },
+                })
+                    .sort({ updatedAt: -1 })
+                    .skip((pageNum - 1) * limitNum)
+                    .limit(limitNum);
+                // .populate("user");
+                // totalCount = await Posts.countDocuments({
+                //     status: "published",
+                //     category: { $in: categories },
+                // });
+                await setCache(cacheKey,JSON.stringify(posts))
+            }
         }
         // get post by publisher
         else if (publishers) {
-            publishers = (publishers as String).split(",");
-            posts = await Posts.find({
-                status: "published",
-                publisher: { $in: publishers },
-            })
-                .sort({ updatedAt: -1 })
-                .skip((pageNum - 1) * limitNum)
-                .limit(limitNum);
-            // .populate("user");
-            totalCount = await Posts.countDocuments({
-                status: "published",
-                publisher: { $in: publishers },
-            });
+            const cached = await getCache(publishers as string)
+            if(cached){
+                posts = JSON.parse(cached as string)
+            }else{
+                const cacheKey = publishers as string
+                publishers = (publishers as String).split(",");
+                posts = await Posts.find({
+                    status: "published",
+                    publisher: { $in: publishers },
+                })
+                    .sort({ updatedAt: -1 })
+                    .skip((pageNum - 1) * limitNum)
+                    .limit(limitNum);
+                // .populate("user");
+                // totalCount = await Posts.countDocuments({
+                //     status: "published",
+                //     publisher: { $in: publishers },
+                // });
+                await setCache(cacheKey,JSON.stringify(posts))
+
+            }
+            
         } else if (tags) {
-            tags = (tags as String).split(",");
-            // tags field is a array in mongoDb so we use $in operator to find all posts with tags
-            posts = await Posts.find({
-                status: "published",
-                tags: { $in: tags },
-            })
-                .sort({ updatedAt: -1 })
-                .skip((pageNum - 1) * limitNum)
-                .limit(limitNum);
-            // .populate("user");
-            totalCount = await Posts.countDocuments({
-                status: "published",
-                tags: { $in: tags },
-            });
-            console.log(posts);
+            const cached = await getCache(tags as string)
+            if(cached){
+                posts = JSON.parse(cached as string)
+               
+            }else{
+                const cacheKey = tags as string
+                tags = (tags as String).split(",");
+                // tags field is a array in mongoDb so we use $in operator to find all posts with tags
+                posts = await Posts.find({
+                    status: "published",
+                    tags: { $in: tags },
+                })
+                    .sort({ updatedAt: -1 })
+                    .skip((pageNum - 1) * limitNum)
+                    .limit(limitNum);
+                // .populate("user");
+                // totalCount = await Posts.countDocuments({
+                //     status: "published",
+                //     tags: { $in: tags },
+                // });
+                await setCache(cacheKey,JSON.stringify(posts))
+            }
         }
         // get all post by default
         else {
-            posts = await Posts.find({ status: "published" })
-                .sort({ updatedAt: -1 })
-                .skip((pageNum - 1) * limitNum)
-                .limit(limitNum);
-            // .populate("user");
-            totalCount = await Posts.countDocuments({ status: "published" });
+            const cached = await getCache("posts")
+            if(cached){
+                posts = JSON.parse(cached as string)
+            }else{
+                posts = await Posts.find({ status: "published" })
+                    .sort({ updatedAt: -1 })
+                    .skip((pageNum - 1) * limitNum)
+                    .limit(limitNum);
+                // .populate("user");
+                // totalCount = await Posts.countDocuments({ status: "published" });
+                await setCache("posts",JSON.stringify(posts))
+            }
         }
         return res.status(200).json({
             status: 200,
             message: "Posts fetched successfully",
-            totalCount,
+            // totalCount,
             data: posts,
         });
     } catch (error) {
@@ -234,7 +263,14 @@ export const getPosts = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const post = await Posts.findOne({ _id: id, status: "published" });
+        const cached = await getCache(`post-${id}`)
+        let post;
+        if(cached){
+            post = JSON.parse(cached as string)
+        }else{
+            post = await Posts.findOne({ _id: id, status: "published" });
+            await setCache(`post-${id}`,JSON.stringify(post))
+        }
         return res.status(200).json({
             status: 200,
             message: "Post fetched successfully",
@@ -245,6 +281,7 @@ export const getPost = async (req: Request, res: Response) => {
         return res.status(500).json({ status: 500, error });
     }
 };
+
 /** get single published Posts */
 export const getPostsByTags = async (req: Request, res: Response) => {
     try {

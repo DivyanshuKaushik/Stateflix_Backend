@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 import { config } from "dotenv";
 import Visitors, { IVisitor } from "./models/Visitor";
+import { getCache, setCache } from "./cache";
 config();
 
 const GoogleStrategy = new Strategy(
@@ -45,9 +46,14 @@ passport.serializeUser((user, done) => {
     done(null, user);
 });
 passport.deserializeUser(async function (user: IVisitor, done) {
+    const cacheData = await getCache(`visitor-${user._id}`)
+    if(cacheData){
+        done(null,JSON.parse(cacheData as string))
+    }
     const visitor = await Visitors.findById(user._id).populate("following");
     const token = await visitor?.generateAuthToken();
     if(visitor){
+        await setCache(`visitor-${user._id}`,JSON.stringify(visitor))
         visitor.token = token as string;
     }
     done(null,visitor);
