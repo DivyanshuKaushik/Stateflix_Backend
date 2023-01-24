@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session';
 import passport from 'passport'
 import MongoDBStore from 'connect-mongodb-session'
+import redis from 'redis'
 import db from './db'
 /**  import all routes */ 
 import authRoutes from './routes/auth.routes'
@@ -20,19 +21,8 @@ import publisherRoutes from './routes/publisher.routes'
 import adsRoutes from './routes/ads.routes'
 import trendingRoutes from './routes/trending.routes'
 import visitorRoutes from './routes/visitor.routes'
+import { connectToRedis } from './cache'
 // import { genAPIKey } from './utils'
-
-import slugify from "slugify"
-
-console.log(slugify("hello-world", {
-    replacement: '-',  // replace spaces with replacement character, defaults to `-`
-    remove: undefined, // remove characters that match regex, defaults to `undefined`
-    lower: true,      // convert to lower case, defaults to `false`
-    strict: false,     // strip special characters except replacement, defaults to `false`
-    locale: 'vi'       // language code of the locale to use
-    })
-)
-
 
 /**  express app initialization */
 const app: Application = express()
@@ -40,9 +30,11 @@ const app: Application = express()
 /**  dotenv config - loading env secrets */
 dotenv.config()
 
+/** connect to redis for caching  */ 
+connectToRedis()
+
 /**  database connection */
 db()
-
 
 /**  request logger */ 
 app.use(morgan('short'))
@@ -59,7 +51,7 @@ app.use(cookieParser())
 
 /**  cors configuration  */
 const corsOptions = {
-    origin:["http://localhost:3000","https://www.stateflix.com","https://stateflix.com"],
+    origin:["http://localhost:3000","http://localhost","https://www.stateflix.com","https://stateflix.com"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200,
     credentials:true,

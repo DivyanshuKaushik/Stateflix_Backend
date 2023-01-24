@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import Users from "../models/Users";
 import { CustomRequest } from "../middlewares/auth";
-import { JsonResponse } from "../utils";
+import { JsonResponse,JSONResponse } from "../utils";
+import { getCache, setCache } from "../cache";
 
 /** register controller - start */
 export const register = async (req: Request, res: Response) => {
@@ -88,9 +89,16 @@ export const getAuthenticatedUser = async (
     try {
         // verified user from token
         const user = req.user;
+        // fetch from cache 
+        const cacheUser = await getCache(`user-${user._id}`)
+        if(cacheUser){
+            return res.status(200).json(JSONResponse(200,"From cache",JSON.parse(cacheUser as string)))
+        }
+
         const userData: any = await Users.findById(user._id);
         // return res.status(200).json({status: 200, message: "User found", user:userData})
 
+        await setCache(`user-${user._id}`,JSON.stringify(userData))
         return JsonResponse(res, 200, "User found", {
             id: userData.id,
             name: userData.name,

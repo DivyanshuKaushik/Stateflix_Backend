@@ -1,5 +1,5 @@
 # Base image
-FROM node:16-alpine as base
+FROM node:16 as base
 
 # Build stage
 FROM base as builder
@@ -14,13 +14,13 @@ RUN yarn build
 # RUN npm run build
 
 # Final stage
-FROM base
-WORKDIR /app
-COPY package.json yarn.lock ./
-COPY --from=builder /app/dist ./
-RUN yarn install --only=production
+# FROM base
+# WORKDIR /app
+# COPY package.json yarn.lock ./
+# COPY --from=builder /app/dist ./
+# RUN yarn install --only=production
 EXPOSE 4000
-CMD ["app.js"]
+CMD ["yarn", "start"]
 
 # COPY package*.json ./
 # COPY --from=builder /app/dist ./
