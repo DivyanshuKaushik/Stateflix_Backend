@@ -3,6 +3,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../components/panel/theme/theme";
 import createEmotionCache from "../components/panel/createEmotionCache";
+import { getCategories } from "../api/categories";
 
 export default class MyDocument extends Document {
   render() {
@@ -25,32 +26,12 @@ export default class MyDocument extends Document {
   }
 }
 
-// `getInitialProps` belongs to `_document` (instead of `_app`),
-// it's compatible with static-site generation (SSG).
 MyDocument.getInitialProps = async (ctx) => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
-  // 4. app.render
-  // 5. page.render
-  // 6. document.render
-  //
-  // On the server with error:
-  // 1. document.getInitialProps
-  // 2. app.render
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. app.render
-  // 4. page.render
 
   const originalRenderPage = ctx.renderPage;
+
+  // fetch initial data from server
+  const categories = await getCategories()
 
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
@@ -61,7 +42,7 @@ MyDocument.getInitialProps = async (ctx) => {
     originalRenderPage({
       enhanceApp: (App) =>
         function EnhanceApp(props) {
-          return <App emotionCache={cache} {...props} />;
+          return <App emotionCache={cache} categories={categories} {...props} />;
         },
     });
 

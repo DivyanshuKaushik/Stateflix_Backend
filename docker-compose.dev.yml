@@ -14,13 +14,16 @@ services:
         networks:
             - stateflix
     redis:
+        container_name: redis_cache
         image: redis
         restart: always
         ports:
             - "6379:6379"
         command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
         volumes: 
-            - ./redis:/data
+            - ./redis_cache:/data
+        networks:
+            - stateflix
 
 
     frontend:
@@ -51,6 +54,8 @@ services:
             - 4000
         volumes:
             - ./backend:/app
+        depends_on:
+            - redis
         networks:
             - stateflix
 networks:
