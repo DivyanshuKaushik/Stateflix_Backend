@@ -1,7 +1,10 @@
 version: "3.8"
 services:
     nginx:
-        image: divyanshukaushik/stateflix-nginx:latest
+        # image: divyanshukaushik/stateflix-nginx:latest
+        build: ./nginx
+        volumes:
+            - ./nginx:/home
         restart: always
         depends_on:
             # - frontend
@@ -39,13 +42,18 @@ services:
 
     backend:
         container_name: backend
-        image: divyanshukaushik/stateflix-backend:latest
+        # image: divyanshukaushik/stateflix-backend:latest
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile.dev
         env_file:
           - ./backend/.env
         ports:
             - "4000:4000"
         expose:
             - 4000
+        volumes:
+            - ./backend:/app
         depends_on:
             - redis
         networks:
