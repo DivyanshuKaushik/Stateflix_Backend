@@ -26,19 +26,19 @@ services:
             - stateflix
 
 
-    frontend:
-        # image: divyanshukaushik/stateflix-frontend:latest
-        build: 
-            context: ./frontend 
-            dockerfile: Dockerfile.dev
-        env_file:
-          - ./frontend/.env.local
-        ports:
-            - "3000:3000"
-        volumes:
-            - ./frontend:/app
-        networks:
-            - stateflix
+    # frontend:
+    #     # image: divyanshukaushik/stateflix-frontend:latest
+    #     build: 
+    #         context: ./frontend 
+    #         dockerfile: Dockerfile.dev
+    #     env_file:
+    #       - ./frontend/.env.local
+    #     ports:
+    #         - "3000:3000"
+    #     volumes:
+    #         - ./frontend:/app
+    #     networks:
+    #         - stateflix
 
     backend:
         container_name: backend

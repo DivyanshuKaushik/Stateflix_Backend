@@ -11,12 +11,12 @@ services:
         networks:
             - stateflix
 
-    frontend:
-        image: divyanshukaushik/stateflix-frontend:latest
-        env_file:
-            - ./frontend/.env.local
-        networks:
-            - stateflix
+    # frontend:
+    #     image: divyanshukaushik/stateflix-frontend:latest
+    #     env_file:
+    #         - ./frontend/.env.local
+    #     networks:
+    #         - stateflix
 
     backend:
         image: divyanshukaushik/stateflix-backend:latest
