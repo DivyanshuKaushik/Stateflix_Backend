@@ -19,6 +19,10 @@ import VisitorProvider from "../components/layouts/auth/VisitorProvider";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+MyApp.getInitialProps = async (ctx) => {
+
+}
+
 function MyApp({
     Component,
     emotionCache = clientSideEmotionCache,
