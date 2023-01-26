@@ -24,8 +24,10 @@ function MyApp({
     emotionCache = clientSideEmotionCache,
     pageProps,
     router,
+    categories,
 }) {
     // const router = useRouter();
+    console.log(categories);
     const [loading, setLoading] = useState(false);
     Router.events.on("routeChangeStart", () => {
         setLoading(true);
@@ -87,7 +89,7 @@ function MyApp({
                                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
                             </div>
                         )}
-                        <InitialStateProvider>
+                        <InitialStateProvider categories={categories}>
                             {getLayout ? (
                                 getLayout(<Component {...pageProps} />)
                             ) : (

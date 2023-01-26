@@ -6,17 +6,18 @@ import { setPublisher } from '../app/features/publisherSlice';
 
 import API from '../services/API';
 
-const InitialStateProvider = ({children}) => {
+const InitialStateProvider = ({children,categories}) => {
     const [loading,setLoading] = useState(false)
     const dispatch = useDispatch();
 
     async function fetchInitialRequiredData(){
         try {
+            console.log(categories);
             setLoading(true)
-            const categories = (await API.get("/categories")).data.data
+            // const categories = (await API.get("/categories")).data.data
             dispatch(setCategories(categories))
-            const publisher =  (await API.get("/publisher")).data.data
-            dispatch(setPublisher(publisher))
+            // const publisher =  (await API.get("/publisher")).data.data
+            // dispatch(setPublisher(publisher))
             setLoading(false)
         } catch (error) {
             dispatch(setCategories([]))
