@@ -25,6 +25,21 @@ services:
     backend:
         image: divyanshukaushik/stateflix-backend:latest
         environment:
-            - HELLO=hello
+            - MONGO_URI=${MONGO_URI}
+            - REDIS_HOST=${REDIS_HOST}
+            - REDIS_PORT_C=${REDIS_PORT_C}
+            - REDIS_PASSWORD_C=${REDIS_PASSWORD_C}
+            - REDIS_URL_C=${REDIS_URL_C}
+            - REDIS_URL=${REDIS_URL}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
+            - JWT_SECRET=${JWT_SECRET}
+            - DK_AWS_ACCESS_KEY_ID=${DK_AWS_ACCESS_KEY_ID}
+            - DK_AWS_SECRET_ACCESS_KEY=${DK_AWS_SECRET_ACCESS_KEY}
+            - DK_AWS_REGION=${DK_AWS_REGION}
+            - DK_AWS_S3_BUCKET_NAME=${DK_AWS_S3_BUCKET_NAME}
+            - STATEFLIX_API_KEY=${STATEFLIX_API_KEY}
+            - DK_GOOGLE_CLIENT_ID=${DK_GOOGLE_CLIENT_ID}
+            - DK_GOOGLE_CLIENT_SECRET=${DK_GOOGLE_CLIENT_SECRET}
+            - STATEFLIX_CLIENT_URI=${STATEFLIX_CLIENT_URI}
 
 
