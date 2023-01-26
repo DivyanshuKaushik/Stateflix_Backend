@@ -4,7 +4,6 @@ services:
         image: divyanshukaushik/stateflix-nginx:latest
         restart: always
         depends_on:
-            # - frontend
             - backend
         ports:
             - "80:80"
@@ -25,7 +24,7 @@ services:
 
     backend:
         image: divyanshukaushik/stateflix-backend:latest
-        env_file:
-            - ./backend/.env
+        environment:
+            - HELLO=hello
 
 
