@@ -3,8 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const redisClient = createClient({
-    url: process.env.REDIS_URL_C,
-    password: process.env.REDIS_PASSWORD_C,
+    url: process.env.REDIS_URL,
+    password: process.env.REDIS_PASSWORD,
 })
 
 
