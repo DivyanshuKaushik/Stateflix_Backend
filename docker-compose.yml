@@ -18,13 +18,13 @@ services:
     #     volumes:
     #         - ./nginx/certbot:/etc/letsencrypt
     #     command: certonly --webroot -w /etc/letsencrypt -d api.stateflix.com -d www.api.stateflix.com --email divyanshukaushik44@gmail.com
-    redis:
-        container_name: redis_cache
-        image: redis
-        restart: always
-        ports:
-            - "6379:6379"
-        command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    # redis:
+    #     container_name: redis_cache
+    #     image: redis
+    #     restart: always
+    #     ports:
+    #         - "6379:6379"
+    #     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
 
     # frontend:
     #     image: divyanshukaushik/stateflix-frontend:latest
