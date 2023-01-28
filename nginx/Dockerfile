@@ -14,7 +14,7 @@ RUN rm /etc/nginx/conf.d/*
 
 # copy the custom configuration file from the current directory
 COPY ./default.conf /etc/nginx/conf.d/
-# RUN certbot certonly --standalone -d api.stateflix.com --agree-tos --email divyanshukaushik44@gmail.com --no-eff-email --non-interactive --keep-until-expiring --expand 
+RUN certbot certonly --standalone -d api.stateflix.com --agree-tos --email divyanshukaushik44@gmail.com --no-eff-email --non-interactive --keep-until-expiring --expand 
 # expose port 80 and 443
 EXPOSE 80 443
 
