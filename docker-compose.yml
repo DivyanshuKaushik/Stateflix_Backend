@@ -8,16 +8,20 @@ services:
         ports:
             - "80:80"
             - "443:443"
-        # volumes:
-        #     - ./nginx/certbot:/etc/letsencrypt
-        #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-        #     - ./nginx/conf.d:/etc/nginx/conf.d
-    # certbot:
-    #     image: certbot/certbot
-    #     restart: always
-    #     volumes:
-    #         - ./nginx/certbot:/etc/letsencrypt
-    #     command: certonly --webroot -w /etc/letsencrypt -d api.stateflix.com -d www.api.stateflix.com --email divyanshukaushik44@gmail.com
+        volumes:
+            - ./certbot/etc:/etc/letsencrypt
+            - ./certbot/var:/var/lib/letsencrypt
+            - ./nginx:/home
+    certbot:
+        image: certbot/certbot
+        restart: always
+        volumes:
+            - ./certbot/etc:/etc/letsencrypt
+            - ./certbot/var:/var/lib/letsencrypt
+        command: certonly --webroot -w /etc/letsencrypt -d api.stateflix.com -d api.stateflix.com --email divyanshukaushik44@gmail.com --agree-tos --no-eff-email --staging --non-interactive --keep-until-expiring --expand
+        depends_on:
+            - nginx
+        # command: certonly --webroot --webroot-path=/var/www/html --email sammy@your_domain --agree-tos --no-eff-email --staging -d your_domain  -d www.your_domain 
     # redis:
     #     container_name: redis_cache
     #     image: redis
