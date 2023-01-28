@@ -1,11 +1,11 @@
 FROM nginx:stable-alpine
 
 # generate a ssl certificate 
-RUN apk add --no-cache openssl
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=api.stateflix.com"
+# RUN apk add --no-cache openssl
+# RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=api.stateflix.com"
 
 # RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-WORKDIR /
+# WORKDIR /
 # generate ssl using certbot 
 # RUN apk add certbot
 
