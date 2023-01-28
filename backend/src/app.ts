@@ -51,7 +51,7 @@ app.use(cookieParser())
 
 /**  cors configuration  */
 const corsOptions = {
-    origin:["http://localhost:3000","http://localhost:80","https://www.stateflix.com","https://stateflix.com"],
+    origin:["http://localhost:3000","https://www.stateflix.com","https://stateflix.com"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200,
     credentials:true,
