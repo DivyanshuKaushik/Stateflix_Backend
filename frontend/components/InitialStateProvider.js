@@ -12,7 +12,6 @@ const InitialStateProvider = ({children,categories}) => {
 
     async function fetchInitialRequiredData(){
         try {
-            console.log(categories,"iniital");
             setLoading(true)
             const cat = (await API.get("/categories")).data.data
             dispatch(setCategories(cat))
@@ -30,6 +29,11 @@ const InitialStateProvider = ({children,categories}) => {
     useEffect(()=>{
         fetchInitialRequiredData()
     },[])
+    if(loading){
+        return  <div className="fixed top-0 left-0 w-full h-full bg-white dark:bg-black bg-opacity-50 dark:bg-opacity-50 z-50 flex justify-center items-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+    </div>
+    }
   return (
     !loading && children
   )
