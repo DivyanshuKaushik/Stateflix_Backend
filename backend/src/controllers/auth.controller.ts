@@ -41,7 +41,6 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password);
 
         // check if user exists in database
         const existingUser = await Users.findOne({ email });
@@ -50,6 +49,7 @@ export const login = async (req: Request, res: Response) => {
                 .status(400)
                 .json({ status: 400, message: "User does not exist" });
         }
+        // console.log(existingUser)
         // check if password is correct
         const isMatch = await existingUser.comparePassword(password);
         if (!isMatch) {
@@ -68,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
                 status: 200,
                 message: "User logged in successfully",
                 data: {
-                    id: existingUser._id,
+                    _id: existingUser._id,
                     name: existingUser.name,
                     email: existingUser.email,
                     phone: existingUser.phone,
@@ -95,7 +95,7 @@ export const getAuthenticatedUser = async (
             return res.status(200).json(JSONResponse(200,"From cache",JSON.parse(cacheUser as string)))
         }
 
-        const userData: any = await Users.findById(user._id).select("~password").select('~createdAt').select('~updatedAt').select('~__v');
+        const userData: any = await Users.findById(user._id).select("-password").select('-createdAt').select('-updatedAt').select('-__v');
         // return res.status(200).json({status: 200, message: "User found", user:userData})
 
         await setCache(`user-${user._id}`,JSON.stringify(userData))

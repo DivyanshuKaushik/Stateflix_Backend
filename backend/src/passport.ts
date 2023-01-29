@@ -15,7 +15,6 @@ const GoogleStrategy = new Strategy(
     async function (accessToken:any, refreshToken:any, profile:any, callback:any) {
         try{
             const visitor = await Visitors.findOne({provider_id:profile.id,provider:profile.provider}).populate("following")
-            console.log(visitor)
             if(!visitor){
                 const newVisitor = new Visitors({
                     provider_id:profile.id,
@@ -48,7 +47,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async function (user: IVisitor, done) {
     const cacheData = await getCache(`visitor-${user._id}`)
     if(cacheData){
-        done(null,JSON.parse(cacheData as string))
+        return done(null,JSON.parse(cacheData as string))
     }
     const visitor = await Visitors.findById(user._id).populate("following");
     const token = await visitor?.generateAuthToken();
@@ -56,7 +55,7 @@ passport.deserializeUser(async function (user: IVisitor, done) {
         await setCache(`visitor-${user._id}`,JSON.stringify(visitor))
         visitor.token = token as string;
     }
-    done(null,visitor);
+    return done(null,visitor);
 });
 // passport.use(,
 //   function(request:Request, accessToken:any, refreshToken:any, profile:any, done:any) {

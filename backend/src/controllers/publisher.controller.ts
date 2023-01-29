@@ -1,11 +1,25 @@
 import { Request, Response } from "express";
+import { getCache, setCache } from "../cache";
 import Publisher from "../models/Publisher";
 import Users from "../models/Users";
 import { JSONResponse } from "../utils";
 
 export const getPublishers = async (req: Request, res: Response) => {
     try {
+        const cacheData = await getCache("publishers");
+        if (cacheData) {
+            return res
+                .status(200)
+                .json(
+                    JSONResponse(
+                        200,
+                        "Publishers fetched successfully",
+                        JSON.parse(cacheData as string)
+                    )
+                );
+        }
         const publishers = await Publisher.find();
+        await setCache("publishers", JSON.stringify(publishers))
         return res
             .status(200)
             .json(
