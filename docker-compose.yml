@@ -1,17 +1,15 @@
 version: "3.9"
 services:
-    # nginx:
-    #     image: divyanshukaushik/stateflix-nginx:latest
-    #     restart: always
-    #     depends_on:
-    #         - backend
-    #     ports:
-    #         - "80:80"
-    #         - "443:443"
-        # volumes:
-        #     - ./certbot/etc:/etc/letsencrypt
-        #     - ./certbot/var:/var/lib/letsencrypt
-        #     - ./nginx:/home
+    nginx:
+        image: divyanshukaushik/stateflix-nginx:latest
+        restart: always
+        depends_on:
+            - backend
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx:/home
     # certbot:
     #     image: certbot/certbot
     #     restart: always
