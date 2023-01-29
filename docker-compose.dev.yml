@@ -1,68 +1,43 @@
 version: "3.8"
 services:
     nginx:
-        # image: divyanshukaushik/stateflix-nginx:latest
         build: ./nginx
         volumes:
             - ./nginx:/home
-            # - ./certbot/www:/var/www/certbot/:ro
         restart: always
         depends_on:
-            # - frontend
-            - backend
+            - api
         ports:
             - "80:80"
             - "443:443"
         networks:
             - stateflix
-    # certbot:
-    #     image: certbot/certbot:latest
-    #     volumes:
-    #         - ./certbot/www/:/var/www/certbot/:rw
-    #         - ./certbot/conf/:/etc/letsencrypt/:rw
-    #     command: 
-    #         - certbot certonly --webroot -w /etc/letsencrypt -d localhost
     redis:
         container_name: redis_cache
         image: redis
         restart: always
         ports:
             - "6379:6379"
-        command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+        command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
         volumes: 
             - ./redis_cache:/data
+        env_file:
+          - ./api/.env
         networks:
             - stateflix
-
-
-    # frontend:
-    #     # image: divyanshukaushik/stateflix-frontend:latest
-    #     build: 
-    #         context: ./frontend 
-    #         dockerfile: Dockerfile.dev
-    #     env_file:
-    #       - ./frontend/.env.local
-    #     ports:
-    #         - "3000:3000"
-    #     volumes:
-    #         - ./frontend:/app
-    #     networks:
-    #         - stateflix
-
-    backend:
-        container_name: backend
-        # image: divyanshukaushik/stateflix-backend:latest
+    api:
+        container_name: api
         build: 
-            context: ./backend
+            context: ./api
             dockerfile: Dockerfile.dev
         env_file:
-          - ./backend/.env
+          - ./api/.env
         ports:
             - "4000:4000"
         expose:
             - 4000
         volumes:
-            - ./backend:/app
+            - ./api:/app
         depends_on:
             - redis
         networks:
