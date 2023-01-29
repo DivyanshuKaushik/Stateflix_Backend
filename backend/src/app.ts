@@ -106,7 +106,6 @@ app.use('/api/v1',authRoutes)
 app.use((req: Request,res: Response,next: NextFunction)=>{
     try {
         const apiKey = req.headers['x-api-key']
-        console.log(req.headers['x-api-key'])
         req.headers["Accept-Encoding"] = "gzip,deflate,compress"
         if(apiKey === process.env.STATEFLIX_API_KEY){
             next()

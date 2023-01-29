@@ -12,7 +12,7 @@ const InitialStateProvider = ({children,categories}) => {
 
     async function fetchInitialRequiredData(){
         try {
-            console.log(categories);
+            console.log(categories,"iniital");
             setLoading(true)
             const cat = (await API.get("/categories")).data.data
             dispatch(setCategories(cat))

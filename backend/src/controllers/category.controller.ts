@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getCache, setCache } from "../cache";
 import Category from "../models/Category";
 import { deleteImage, uploadImage } from "../utils/s3";
 /** create category controller */
@@ -49,7 +50,16 @@ export const createCategory = async(req:Request,res:Response)=>{
 /** get all category */
 export const getCategories = async(req:Request,res:Response)=>{
     try{
+        const cacheData = await getCache("categories");
+        if(cacheData){
+            return res.status(200).json({
+                status:200,
+                message:"Categories fetched successfully",
+                data:JSON.parse(cacheData as string)
+            });
+        }
         const categories = await Category.find({});
+        await setCache("categories",JSON.stringify(categories));
         return res.status(200).json({
             status:200,
             message:"Categories fetched successfully",

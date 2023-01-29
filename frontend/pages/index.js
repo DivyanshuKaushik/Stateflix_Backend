@@ -6,6 +6,8 @@ import MainWrapper from "../components/layouts/MainWrapper";
 import { useSelector } from "react-redux";
 import { selectVisitor } from "../app/features/authSlice";
 import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "./_app";
 
 export default function Home({news,ads}) {
   // const visitor = useSelector(selectVisitor)
