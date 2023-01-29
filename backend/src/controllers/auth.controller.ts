@@ -95,17 +95,11 @@ export const getAuthenticatedUser = async (
             return res.status(200).json(JSONResponse(200,"From cache",JSON.parse(cacheUser as string)))
         }
 
-        const userData: any = await Users.findById(user._id);
+        const userData: any = await Users.findById(user._id).select("~password").select('~createdAt').select('~updatedAt').select('~__v');
         // return res.status(200).json({status: 200, message: "User found", user:userData})
 
         await setCache(`user-${user._id}`,JSON.stringify(userData))
-        return JsonResponse(res, 200, "User found", {
-            id: userData.id,
-            name: userData.name,
-            email: userData.email,
-            phone: userData.phone,
-            role: userData.role,
-        });
+        return JsonResponse(res, 200, "User found", userData);
     } catch (error) {
         console.log(error)
         res.status(500).json({ status: 500, error });

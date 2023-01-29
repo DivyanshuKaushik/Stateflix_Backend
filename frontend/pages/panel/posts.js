@@ -19,7 +19,7 @@ const Posts = () => {
     async function fetchPosts() {
         try {
             setLoading(true);
-            const data = (await API.get(`/posts/user/${user.id}`)).data.data;
+            const data = (await API.get(`/posts/user/${user._id}`)).data.data;
             setPosts(data);
             setLoading(false);
         } catch (err) {

@@ -1,4 +1,5 @@
 import Script from "next/script";
+import React from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "next-themes";
 import { store } from "../app/store";
@@ -18,7 +19,6 @@ import VisitorProvider from "../components/layouts/auth/VisitorProvider";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
 function MyApp({
     Component,
     emotionCache = clientSideEmotionCache,
@@ -27,7 +27,7 @@ function MyApp({
     categories,
 }) {
     // const router = useRouter();
-    console.log(categories);
+    // console.log(categories,"app");
     const [loading, setLoading] = useState(false);
     Router.events.on("routeChangeStart", () => {
         setLoading(true);
@@ -64,6 +64,7 @@ function MyApp({
                     />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
+                {/* <h1>{categories && categories[0].name}</h1> */}
                 <Script
                     strategy="afterInteractive"
                     src="https://www.googletagmanager.com/gtag/js?id=G-4MNHXVCDK1"
@@ -89,15 +90,15 @@ function MyApp({
                                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
                             </div>
                         )}
-                        <InitialStateProvider categories={categories}>
-                            {getLayout ? (
-                                getLayout(<Component {...pageProps} />)
-                            ) : (
-                                <VisitorProvider>
-                                    <Component {...pageProps} />
-                                </VisitorProvider>
-                            )}
-                        </InitialStateProvider>
+                            <InitialStateProvider categories={categories}>
+                                {getLayout ? (
+                                    getLayout(<Component {...pageProps} />)
+                                ) : (
+                                    <VisitorProvider>
+                                        <Component categories={categories} {...pageProps} />
+                                    </VisitorProvider>
+                                )}
+                            </InitialStateProvider>
                     </ThemeProvider>
                 </MuiThemeProvider>
             </CacheProvider>

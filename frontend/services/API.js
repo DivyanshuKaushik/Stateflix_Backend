@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 // console.log(process.env.STATEFLIX_API_KEY);
 // const API = axios.create({
 //     baseURL: api_config.baseURL,
